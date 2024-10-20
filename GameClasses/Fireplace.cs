@@ -88,14 +88,14 @@ namespace AutomaticFuel.GameClasses
                                         AutomaticFuelPlugin.Destroy(item.gameObject);
                                     else
                                         ZNetScene.instance.Destroy(item.gameObject);
-                                    znview.InvokeRPC("AddFuel", new object[] { });
+                                    znview.InvokeRPC("RPC_AddFuel", new object[] { });
                                     if (AutomaticFuelPlugin.distributedFilling.Value)
                                         return;
                                     break;
                                 }
 
                                 item.m_itemData.m_stack--;
-                                znview.InvokeRPC("AddFuel", new object[] { });
+                                znview.InvokeRPC("RPC_AddFuel", new object[] { });
                                 Traverse.Create(item).Method("Save").GetValue();
                                 if (AutomaticFuelPlugin.distributedFilling.Value)
                                     return;
@@ -123,7 +123,7 @@ namespace AutomaticFuel.GameClasses
 
                                 AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {fuelItem.m_stack} {fuelItem.m_dropPrefab.name}, taking one");
 
-                                znview.InvokeRPC("AddFuel", new object[] { });
+                                znview.InvokeRPC("RPC_AddFuel", new object[] { });
 
                                 c.GetInventory().RemoveItem(fireplace.m_fuelItem.m_itemData.m_shared.m_name, 1);
                                 typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });

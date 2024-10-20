@@ -5,9 +5,9 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using HarmonyLib;
 using ServerSync;
 using UnityEngine;
+using HarmonyLib;
 
 namespace AutomaticFuel
 {
@@ -15,7 +15,7 @@ namespace AutomaticFuel
     public class AutomaticFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "AutomaticFuel";
-        internal const string ModVersion = "1.3.7";
+        internal const string ModVersion = "1.4.2";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";

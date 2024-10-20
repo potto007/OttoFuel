@@ -1,5 +1,7 @@
 # Automatic Fuel
 
+### Updated for Hildir's Request
+
 Fuels torches, campfires, windmills, spinning wheels, hearths, kilns and smelters
 - Fuels from the ground
 - Fuels from chests and custom chests
@@ -12,9 +14,9 @@ I'll do my best to help with any issues.
 [Reach Me on Discord](https://discord.com/users/TastyChickenLegs#4818)
 ### About the Mod:
 __________________
-<b>from Aedenthorn's AutoFuel Mod </b>
 
-#### Rebuilt by TastyChickenLegs now with ServerSync
+
+#### now with ServerSync
 
 #### Mistlands Compatible
 
@@ -80,6 +82,46 @@ For people that run a server and don't want to verify clients turn the "verifycl
 ``````
 ### Version Information
 ___________________________
+
+1.4.2
+
+Updated for newest version 0.219.10
+Added Iron Ore to the list of items to be made in Blast Furnace
+-- Thanks EiraValkyrie for reporting the problem
+
+
+
+1.4.1 
+
+Updated for final release of Ashlands.
+
+
+
+1.4.0
+
+updated for Valheim 0.218.12  Ashlands PTB  
+
+THIS VERSION WILL NOT WORK IN ANYTHING BELOW 0.218
+Use the older version for non Ashalands Versions.
+
+
+
+1.3.9
+
+- updated for Valheim 0.271.22
+
+
+1.3.8
+
+- Updated to the newest Haldor's Quest Version
+
+1.3.7
+
+- Updated to newest Test Branch of Valheim 
+- Increased amount of selectable coal before turning off kilns
+- fixed a few spelling errors
+
+
 
 1.3.6
 
@@ -157,8 +199,6 @@ ___________________________
 ##	Now for the shameless plug
 
 > ### My Other Mods:
->>* [Drop More Loot](https://valheim.thunderstore.io/package/TastyChickenLegs/DropMoreLoot/)
->>* [Automatic Fermenters](https://valheim.thunderstore.io/package/TastyChickenLegs/AutomaticFermenters/)
 >>* [No Smoke Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/NoSmokeStayLit/)
 >>* [No Smoke Simplified](https://valheim.thunderstore.io/package/TastyChickenLegs/NoSmokeSimplified/)
 >>* [Honey Please](https://valheim.thunderstore.io/package/TastyChickenLegs/HoneyPlease/)
@@ -167,4 +207,4 @@ ___________________________
 >>* [Recycle Plus](https://valheim.thunderstore.io/package/TastyChickenLeg/RecyclePlus/)
 >>* [Blast Furnace Takes All](https://valheim.thunderstore.io/package/TastyChickenLeg/BlastFurnaceTakesAll/)
 >>* [Timed Torches Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/TimedTorchesStayLit/)
->>* [Automatic Fermenters](https://valheim.thunderstore.io/package/TastyChickenLegs/AutomaticFermenters/)
+>>* [Drop More Loot](https://valheim.thunderstore.io/package/TastyChickenLegs/DropMoreLoot/)

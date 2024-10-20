@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 //Original Aedenthorn Utilities has been renamed to TastyUtils as I add my own custom items in the future
 //Idea, code and credit go back to the original author
@@ -55,7 +55,6 @@ namespace AutomaticFuel
             return result;
         }
 
-
         public static void AddContainer(Container container, ZNetView nview)
         {
             try
@@ -75,7 +74,6 @@ namespace AutomaticFuel
             }
         }
 
-
         public static List<Container> GetNearbyContainers(Vector3 center, float range)
         {
             List<Container> containers = new();
@@ -87,19 +85,21 @@ namespace AutomaticFuel
                          !container.IsInUse()))
             {
                 var containerPos = container.transform.position;
+
                 if (!PrivateArea.CheckAccess(containerPos, 0f, false))
                     continue;
                 if (!PrivateArea.InsideFactionArea(container.transform.position, Character.Faction.Players))
                 {
                     container.Load();
                     containers.Add(container);
+                   // AutomaticFuelPlugin.AutomaticFuelLogger.LogMessage(container);
                     continue;
                 }
                 else
                 {
                     container.Load();
-                containers.Add(container);
-                 }
+                    containers.Add(container);
+                }
             }
             return containers;
         }

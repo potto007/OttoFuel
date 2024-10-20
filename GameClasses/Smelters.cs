@@ -18,13 +18,15 @@ namespace AutomaticFuel.GameClasses
             { "$item_copperore", null },
             { "$item_copper", null },
             { "$item_ironscrap", null },
+            { "$item_ironore", null },
             { "$item_iron", null },
             { "$item_tinore", null },
             { "$item_tin", null },
             { "$item_silverore", null },
             { "$item_silver", null },
-            { "$item_copperscrap", null }
-            //{ "$item_bronzescrap", null }
+            { "$item_copperscrap", null },
+            { "$item_bronzescrap", null },
+             { "$item_bronze", null }
         };
 
         [HarmonyPatch(typeof(Smelter), nameof(Smelter.Awake))]
@@ -59,9 +61,10 @@ namespace AutomaticFuel.GameClasses
                             new Smelter.ItemConversion{ m_from = metals["$item_copperore"], m_to = metals["$item_copper"]},
                             new Smelter.ItemConversion{ m_from = metals["$item_tinore"], m_to = metals["$item_tin"]},
                             new Smelter.ItemConversion{ m_from = metals["$item_ironscrap"], m_to = metals["$item_iron"]},
+                            new Smelter.ItemConversion{ m_from = metals["$item_ironore"], m_to = metals["$item_iron"]},
                             new Smelter.ItemConversion{ m_from = metals["$item_silverore"], m_to = metals["$item_silver"]},
                            new Smelter.ItemConversion{ m_from = metals["$item_copperscrap"], m_to = metals["$item_copper"]},
-                           //new Smelter.ItemConversion{ m_from = metals["$item_bronzescrap"], m_to = metals["$item_bronze"]},
+                           new Smelter.ItemConversion{ m_from = metals["$item_bronzescrap"], m_to = metals["$item_bronze"]},
                         };
 
                     foreach (Smelter.ItemConversion conversion in conversions)
@@ -200,14 +203,14 @@ namespace AutomaticFuel.GameClasses
                                         AutomaticFuelPlugin.Destroy(item.gameObject);
                                     else
                                         ZNetScene.instance.Destroy(item.gameObject);
-                                    ___m_nview.InvokeRPC("AddOre", new object[] { name });
+                                    ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
                                     if (AutomaticFuelPlugin.distributedFilling.Value)
                                         ored = true;
                                     break;
                                 }
 
                                 item.m_itemData.m_stack--;
-                                ___m_nview.InvokeRPC("AddOre", new object[] { name });
+                                ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
                                 Traverse.Create(item).Method("Save").GetValue();
                                 if (AutomaticFuelPlugin.distributedFilling.Value)
                                     ored = true;
@@ -237,14 +240,14 @@ namespace AutomaticFuel.GameClasses
                                     AutomaticFuelPlugin.Destroy(item.gameObject);
                                 else
                                     ZNetScene.instance.Destroy(item.gameObject);
-                                ___m_nview.InvokeRPC("AddFuel", new object[] { });
+                                ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
                                 if (AutomaticFuelPlugin.distributedFilling.Value)
                                     fueled = true;
                                 break;
                             }
 
                             item.m_itemData.m_stack--;
-                            ___m_nview.InvokeRPC("AddFuel", new object[] { });
+                            ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
                             Traverse.Create(item).Method("Save").GetValue();
                             if (AutomaticFuelPlugin.distributedFilling.Value)
                             {
@@ -275,7 +278,7 @@ namespace AutomaticFuel.GameClasses
 
                             AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {oreItem.m_stack} {oreItem.m_dropPrefab.name}, taking one");
 
-                            ___m_nview.InvokeRPC("AddOre", new object[] { oreItem.m_dropPrefab?.name });
+                            ___m_nview.InvokeRPC("RPC_AddOre", new object[] { oreItem.m_dropPrefab?.name });
                             c.GetInventory().RemoveItem(itemConversion.m_from.m_itemData.m_shared.m_name, 1);
                             typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });
                             typeof(Inventory).GetMethod("Changed", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c.GetInventory(), new object[] { });
@@ -309,7 +312,7 @@ namespace AutomaticFuel.GameClasses
 
                         AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {fuelItem.m_stack} {fuelItem.m_dropPrefab.name}, taking one");
 
-                        ___m_nview.InvokeRPC("AddFuel", new object[] { });
+                        ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
 
                         c.GetInventory().RemoveItem(__instance.m_fuelItem.m_itemData.m_shared.m_name, 1);
                         typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });
