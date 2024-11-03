@@ -109,7 +109,6 @@
     <Compile Include="GameClasses\ConfigurationManagerAttributes.cs" />
     <Compile Include="GameClasses\Fireplace.cs" />
     <Compile Include="GameClasses\Smelters.cs" />
-    <Compile Include="GameClasses\Turret.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TastyUtils.cs" />

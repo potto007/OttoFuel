@@ -99,6 +99,9 @@ namespace AutomaticFuel.GameClasses
         {
             private static void Postfix(Smelter __instance, ZNetView ___m_nview)
             {
+                //if (__instance.name.Contains("piece_spinningwheel"))
+                //    __instance.m_haveRoof = true;
+
                 if (!Player.m_localPlayer || !AutomaticFuelPlugin.isOn.Value || ___m_nview == null || !___m_nview.IsOwner())
                     return;
                 if (__instance.name.Contains("charcoal_kiln") && AutomaticFuelPlugin.turnOffKiln.Value)

@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace AutomaticFuel.GameClasses
         {
             private static void Postfix(Fireplace __instance, ZNetView ___m_nview)
             {
+
+
                 if (!Player.m_localPlayer || !AutomaticFuelPlugin.isOn.Value || !___m_nview.IsOwner() ||
                     (__instance.name.Contains("groundtorch") && !AutomaticFuelPlugin.refuelStandingTorches.Value) ||
                     (__instance.name.Contains("walltorch") && !AutomaticFuelPlugin.refuelWallTorches.Value) ||
