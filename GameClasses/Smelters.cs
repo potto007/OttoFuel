@@ -7,6 +7,7 @@ using HarmonyLib;
 using AutomaticFuel;
 using UnityEngine;
 using System.Reflection;
+using System.CodeDom;
 
 
 namespace AutomaticFuel.GameClasses
@@ -74,6 +75,7 @@ namespace AutomaticFuel.GameClasses
                 }
             }
         }
+        
         //allows the stacking of smelters //
 
         [HarmonyPatch(typeof(Smelter), "UpdateSmoke")]
@@ -93,6 +95,7 @@ namespace AutomaticFuel.GameClasses
                 }
             }
         }
+       
         
         [HarmonyPatch(typeof(Smelter), "UpdateSmelter")]
         private static class Smelter_FixedUpdate_Patch

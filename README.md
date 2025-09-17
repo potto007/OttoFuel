@@ -83,6 +83,15 @@ For people that run a server and don't want to verify clients turn the "verifycl
 ### Version Information
 ___________________________
 
+1.4.6
+
+Updated for newest patch 0.221.4 Call to Arms
+
+
+1.4.5
+
+Updated server sync
+
 1.4.4
 
 Updated for The Bog Witch version 
@@ -90,7 +99,7 @@ Updated for The Bog Witch version
 
 1.4.3
 
-Updated for newest version 0.281.21
+Updated for newest version
 Added Iron Ore to the list of items to be made in Blast Furnace
 -- Thanks EiraValkyrie for reporting the problem
 
