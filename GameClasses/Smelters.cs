@@ -47,13 +47,16 @@ namespace AutomaticFuel.GameClasses
 
                     ObjectDB instance = ObjectDB.instance;
                     List<ItemDrop> materials = instance.GetAllItems(ItemDrop.ItemData.ItemType.Material, "");
-
-                    foreach (ItemDrop material in materials)
+                    
+                    if (AutomaticFuelPlugin.nofloorpickup.Value)
                     {
-                        if (metals.Keys.Contains(material.m_itemData.m_shared.m_name))
+                        foreach (ItemDrop material in materials)
                         {
-                            UnityEngine.Debug.Log("Adding " + material.m_itemData.m_shared.m_name + " to list of materials.");
-                            metals[material.m_itemData.m_shared.m_name] = material;
+                            if (metals.Keys.Contains(material.m_itemData.m_shared.m_name))
+                            {
+                                UnityEngine.Debug.Log("Adding " + material.m_itemData.m_shared.m_name + " to list of materials.");
+                                metals[material.m_itemData.m_shared.m_name] = material;
+                            }
                         }
                     }
 
@@ -113,6 +116,11 @@ namespace AutomaticFuel.GameClasses
                     return;
                 if (__instance.name.Contains("windmill") && AutomaticFuelPlugin.turnOffWindmills.Value)
                     return;
+                if (__instance.name.Contains("$piece_smelter") && AutomaticFuelPlugin.turnoffSmelter.Value)
+                    return;
+                if (__instance.name.Contains("$piece_blastfurnace") && AutomaticFuelPlugin.turnoffBlastFurnace.Value)
+                    return;
+                // added to turn off blast furnace and smelter.  03/02/26
 
 
                 if (Time.time - AutomaticFuelPlugin.lastFuel < 0.1)
@@ -146,6 +154,7 @@ namespace AutomaticFuel.GameClasses
 
             List<Container> nearbyFuelContainers = TastyUtils.GetNearbyContainers
                 (__instance.transform.position, AutomaticFuelPlugin.smelterFuelRange.Value);
+           // AutomaticFuel.AutomaticFuelPlugin.AutomaticFuelLogger.LogInfo(__instance.name);
 
             if (__instance.name.Contains("charcoal_kiln") && AutomaticFuelPlugin.restrictKilnOutput.Value)
             {
@@ -177,29 +186,71 @@ namespace AutomaticFuel.GameClasses
                 if (collider?.attachedRigidbody)
                 {
                     ItemDrop item = collider.attachedRigidbody.GetComponent<ItemDrop>();
-                    //Dbgl($"nearby item name: {item.m_itemData.m_dropPrefab.name}");
+                    //Debug.Log($"nearby item name: {item.m_itemData.m_dropPrefab.name}");
 
                     if (item?.GetComponent<ZNetView>()?.IsValid() != true)
                         continue;
 
                     string name = TastyUtils.GetPrefabName(item.gameObject.name);
-
-                    foreach (Smelter.ItemConversion itemConversion in __instance.m_conversion)
+                    if (AutomaticFuelPlugin.nofloorpickup.Value)
                     {
-                        if (ored)
-                            break;
-                        if (item.m_itemData.m_shared.m_name == itemConversion.m_from.m_itemData.m_shared.m_name && maxOre > 0)
+                        foreach (Smelter.ItemConversion itemConversion in __instance.m_conversion)
                         {
-                            if (AutomaticFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(name))
+                            if (ored)
+                                break;
+                            if (item.m_itemData.m_shared.m_name == itemConversion.m_from.m_itemData.m_shared.m_name && maxOre > 0)
                             {
-                                //Dbgl($"container at {c.transform.position} has {item.m_itemData.m_stack} {item.m_dropPrefab.name} but it's forbidden by config");
+                                if (AutomaticFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(name))
+                                {
+                                    //Dbgl($"container at {c.transform.position} has {item.m_itemData.m_stack} {item.m_dropPrefab.name} but it's forbidden by config");
+                                    continue;
+                                }
+
+                                AutomaticFuelPlugin.Dbgl($"auto adding ore {name} from ground");
+
+                                int amount = Mathf.Min(item.m_itemData.m_stack, maxOre);
+                                maxOre -= amount;
+
+                                for (int i = 0; i < amount; i++)
+                                {
+                                    if (item.m_itemData.m_stack <= 1)
+                                    {
+                                        if (___m_nview.GetZDO() == null)
+                                            AutomaticFuelPlugin.Destroy(item.gameObject);
+                                        else
+                                            ZNetScene.instance.Destroy(item.gameObject);
+                                        ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                        if (AutomaticFuelPlugin.distributedFilling.Value)
+                                            ored = true;
+                                        break;
+                                    }
+
+                                    item.m_itemData.m_stack--;
+                                    ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                    Traverse.Create(item).Method("Save").GetValue();
+                                    if (AutomaticFuelPlugin.distributedFilling.Value)
+                                        ored = true;
+                                }
+                            }
+                        }
+                    }
+                    if (__instance.m_fuelItem && item.m_itemData.m_shared.m_name ==
+                        __instance.m_fuelItem.m_itemData.m_shared.m_name && maxFuel > 0 && !fueled)
+                    { 
+                        //added for the dont pick u from floor
+
+                        if (AutomaticFuelPlugin.nofloorpickup.Value)
+                        {
+                            if (AutomaticFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(name))
+                            {
+                                //Dbgl($"ground has {item.m_itemData.m_dropPrefab.name} but it's forbidden by config");
                                 continue;
                             }
 
-                            AutomaticFuelPlugin.Dbgl($"auto adding ore {name} from ground");
+                            AutomaticFuelPlugin.Dbgl($"auto adding fuel {name} from ground");
 
-                            int amount = Mathf.Min(item.m_itemData.m_stack, maxOre);
-                            maxOre -= amount;
+                            int amount = Mathf.Min(item.m_itemData.m_stack, maxFuel);
+                            maxFuel -= amount;
 
                             for (int i = 0; i < amount; i++)
                             {
@@ -209,56 +260,20 @@ namespace AutomaticFuel.GameClasses
                                         AutomaticFuelPlugin.Destroy(item.gameObject);
                                     else
                                         ZNetScene.instance.Destroy(item.gameObject);
-                                    ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                    ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
                                     if (AutomaticFuelPlugin.distributedFilling.Value)
-                                        ored = true;
+                                        fueled = true;
                                     break;
                                 }
 
                                 item.m_itemData.m_stack--;
-                                ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
                                 Traverse.Create(item).Method("Save").GetValue();
                                 if (AutomaticFuelPlugin.distributedFilling.Value)
-                                    ored = true;
-                            }
-                        }
-                    }
-
-                    if (__instance.m_fuelItem && item.m_itemData.m_shared.m_name ==
-                        __instance.m_fuelItem.m_itemData.m_shared.m_name && maxFuel > 0 && !fueled)
-                    {
-                        if (AutomaticFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(name))
-                        {
-                            //Dbgl($"ground has {item.m_itemData.m_dropPrefab.name} but it's forbidden by config");
-                            continue;
-                        }
-
-                        AutomaticFuelPlugin.Dbgl($"auto adding fuel {name} from ground");
-
-                        int amount = Mathf.Min(item.m_itemData.m_stack, maxFuel);
-                        maxFuel -= amount;
-
-                        for (int i = 0; i < amount; i++)
-                        {
-                            if (item.m_itemData.m_stack <= 1)
-                            {
-                                if (___m_nview.GetZDO() == null)
-                                    AutomaticFuelPlugin.Destroy(item.gameObject);
-                                else
-                                    ZNetScene.instance.Destroy(item.gameObject);
-                                ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
-                                if (AutomaticFuelPlugin.distributedFilling.Value)
+                                {
                                     fueled = true;
-                                break;
-                            }
-
-                            item.m_itemData.m_stack--;
-                            ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
-                            Traverse.Create(item).Method("Save").GetValue();
-                            if (AutomaticFuelPlugin.distributedFilling.Value)
-                            {
-                                fueled = true;
-                                break;
+                                    break;
+                                }
                             }
                         }
                     }

@@ -83,9 +83,14 @@ For people that run a server and don't want to verify clients turn the "verifycl
 ### Version Information
 ___________________________
 
+1.4.7
+
+option to disable blast furnace and smelter default is on
+Added ability to turn off using floor drops for fuel
+
 1.4.6
 
-Updated for newest patch 0.221.4 Call to Arms
+Updated for newest patch and added Shield Generators
 
 
 1.4.5

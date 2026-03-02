@@ -15,7 +15,7 @@ namespace AutomaticFuel
     public class AutomaticFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "AutomaticFuel";
-        internal const string ModVersion = "1.4.6";
+        internal const string ModVersion = "1.4.7";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -54,7 +54,10 @@ namespace AutomaticFuel
         public static ConfigEntry<bool> refuelHotTub;
         public static ConfigEntry<bool> turnOffWindmills;
         public static ConfigEntry<bool> turnOffSpinningWheel;
+        public static ConfigEntry<bool> nofloorpickup;
         internal static string ConnectionError = "";
+        public static ConfigEntry<bool> turnoffSmelter;
+        public static ConfigEntry<bool> turnoffBlastFurnace;
  
         public static float lastFuel;
         public static int fuelCount;
@@ -72,7 +75,7 @@ namespace AutomaticFuel
             On = 1,
             Off = 0
         }
-
+        
         public void Awake()
         {
 
@@ -97,7 +100,7 @@ namespace AutomaticFuel
                 new AcceptableValueRange<int>(1, 1000)));
 
 
-
+            
 
             configStackSmelters = config("Smelters", "AllowStackSmelters", false, "Allows smelters, kiln to be stacked.  Takes away the smoke and smoke blocked check");
             fuelDisallowTypes = config("Fireplace", "FuelDisallowTypes", "RoundLog,FineWood", "Types of item to disallow as fuel (i.e. anything that is consumed), comma-separated.");
@@ -112,6 +115,8 @@ namespace AutomaticFuel
             turnOffWindmills = config("Smelters", "Turn Off Windmills", false, "Turn off the Windmills");
             turnOffSpinningWheel = config("Smelters", "Turn Off SpinningWheel", false, "Turn off the Spinnng Wheel");
             turnOffKiln = config("Smelters", "Turn Off Kiln", false, "Turn off the Kiln");
+            turnoffSmelter = config("Smelters", "Turn off Smelter", false, "Turn off the Smelter");
+            turnoffBlastFurnace = config("Smelters", "Turn off Blast Furnace", false, "Turn off Blast Furnace");
             refuelStandingTorches = config("Fireplace", "RefuelStandingTorches", true, "Refuel standing torches");
             refuelBraziers = config("Fireplace", "RefuelBraziers", true, "Refuel Braziers");
             refuelHotTub = config("Fireplace", "RefuelHotTub", true, "Refuel HotTub");
@@ -119,6 +124,7 @@ namespace AutomaticFuel
             refuelFirePits = config("Fireplace", "RefuelFirePits", true, "Refuel fire pits");
             refuelHearth = config("Fireplace", "RefuelHearth", true, "Refuel Hearth");
             restrictKilnOutput = config("Smelters", "RestrictKilnOutput", false, "Restrict kiln output");
+            nofloorpickup = config("General", "Use Dropped Items", true, "Use Dropped Items");
 
             isOn = config("", "IsOn", true, "Behaviour is currently on or not");
             distributedFilling = config("Smelters", "DistributedFueling", true, "If true, refilling will occur one piece of fuel or ore at a time, making filling take longer but be better distributed between objects.");
