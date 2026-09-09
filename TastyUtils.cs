@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using UnityEngine;
 
 //Original Aedenthorn Utilities has been renamed to TastyUtils as I add my own custom items in the future
@@ -9,6 +10,46 @@ namespace AutomaticFuel
 {
     public class TastyUtils
     {
+
+        // Valheim 1.0 API shims.
+        // Container.Save() and Inventory.Changed() are private, and Changed() gained
+        // two parameters in 1.0. Resolve both once through Harmony AccessTools.
+        private static readonly System.Reflection.MethodInfo? ContainerSaveMethod =
+            AccessTools.Method(typeof(Container), "Save");
+
+        private static readonly System.Reflection.MethodInfo? InventoryChangedMethod =
+            AccessTools.Method(typeof(Inventory), "Changed",
+                new[] { typeof(bool), typeof(bool) });
+
+        // Smelter.m_blockedSmoke is private in 1.0. A publicized assembly is no longer
+        // needed for it.
+        private static readonly AccessTools.FieldRef<Smelter, bool>? SmelterBlockedSmoke =
+            AccessTools.FieldRefAccess<Smelter, bool>("m_blockedSmoke");
+
+        public static void SetSmelterBlockedSmoke(Smelter smelter, bool value)
+        {
+            if (smelter == null || SmelterBlockedSmoke == null) return;
+            SmelterBlockedSmoke(smelter) = value;
+        }
+
+        /// <summary>
+        /// Remove one named item from a container, then save the container and raise the
+        /// inventory changed event.
+        /// </summary>
+        public static void TakeOneFromContainer(Container container, string itemName)
+        {
+            if (container == null) return;
+            Inventory inventory = container.GetInventory();
+            if (inventory == null) return;
+
+            // 1.0 signature: RemoveItem(string name, int amount, int itemQuality, bool worldLevelBased).
+            // Pass -1 and false to keep the pre-1.0 behaviour: any quality, any world level.
+            inventory.RemoveItem(itemName, 1, -1, false);
+
+            ContainerSaveMethod?.Invoke(container, new object[] { });
+            InventoryChangedMethod?.Invoke(inventory, new object[] { true, false });
+        }
+
         public static bool IgnoreKeyPresses(bool extra = false)
         {
             if (!extra)

@@ -40,10 +40,8 @@ namespace AutomaticFuel.GameClasses
                 {
                     if (__instance.m_name != "$piece_blastfurnace")
                     {
-                        UnityEngine.Debug.Log("Ignored non-blast furnace smelter.");
                         return;
                     }
-                    UnityEngine.Debug.Log("Found a blast furnace! Applying fix.");
 
                     ObjectDB instance = ObjectDB.instance;
                     List<ItemDrop> materials = instance.GetAllItems(ItemDrop.ItemData.ItemType.Material, "");
@@ -92,7 +90,7 @@ namespace AutomaticFuel.GameClasses
                     if (AutomaticFuelPlugin.configStackSmelters.Value)
                     {
                         __instance.m_smokeSpawner.enabled = false;
-                        __instance.m_blockedSmoke = false;
+                        TastyUtils.SetSmelterBlockedSmoke(__instance, false);
                         return;
                     }
                 }
@@ -219,14 +217,14 @@ namespace AutomaticFuel.GameClasses
                                             AutomaticFuelPlugin.Destroy(item.gameObject);
                                         else
                                             ZNetScene.instance.Destroy(item.gameObject);
-                                        ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                        ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name, false });
                                         if (AutomaticFuelPlugin.distributedFilling.Value)
                                             ored = true;
                                         break;
                                     }
 
                                     item.m_itemData.m_stack--;
-                                    ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name });
+                                    ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name, false });
                                     Traverse.Create(item).Method("Save").GetValue();
                                     if (AutomaticFuelPlugin.distributedFilling.Value)
                                         ored = true;
@@ -299,10 +297,8 @@ namespace AutomaticFuel.GameClasses
 
                             AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {oreItem.m_stack} {oreItem.m_dropPrefab.name}, taking one");
 
-                            ___m_nview.InvokeRPC("RPC_AddOre", new object[] { oreItem.m_dropPrefab?.name });
-                            c.GetInventory().RemoveItem(itemConversion.m_from.m_itemData.m_shared.m_name, 1);
-                            typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });
-                            typeof(Inventory).GetMethod("Changed", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c.GetInventory(), new object[] { });
+                            ___m_nview.InvokeRPC("RPC_AddOre", new object[] { oreItem.m_dropPrefab?.name, false });
+                            TastyUtils.TakeOneFromContainer(c, itemConversion.m_from.m_itemData.m_shared.m_name);
                             if (AutomaticFuelPlugin.distributedFilling.Value)
                             {
                                 ored = true;
@@ -335,9 +331,7 @@ namespace AutomaticFuel.GameClasses
 
                         ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
 
-                        c.GetInventory().RemoveItem(__instance.m_fuelItem.m_itemData.m_shared.m_name, 1);
-                        typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });
-                        typeof(Inventory).GetMethod("Changed", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c.GetInventory(), new object[] { });
+                        TastyUtils.TakeOneFromContainer(c, __instance.m_fuelItem.m_itemData.m_shared.m_name);
                         if (AutomaticFuelPlugin.distributedFilling.Value)
                         {
                             fueled = true;

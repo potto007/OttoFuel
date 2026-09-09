@@ -15,7 +15,7 @@ namespace AutomaticFuel
     public class AutomaticFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "AutomaticFuel";
-        internal const string ModVersion = "1.4.7";
+        internal const string ModVersion = "1.4.9";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -124,7 +124,7 @@ namespace AutomaticFuel
             refuelFirePits = config("Fireplace", "RefuelFirePits", true, "Refuel fire pits");
             refuelHearth = config("Fireplace", "RefuelHearth", true, "Refuel Hearth");
             restrictKilnOutput = config("Smelters", "RestrictKilnOutput", false, "Restrict kiln output");
-            nofloorpickup = config("General", "Use Dropped Items", true, "Use Dropped Items");
+            nofloorpickup = config("General", "Use Dropped Items for Fuel", true, "Use Dropped Items for Fuel");
 
             isOn = config("", "IsOn", true, "Behaviour is currently on or not");
             distributedFilling = config("Smelters", "DistributedFueling", true, "If true, refilling will occur one piece of fuel or ore at a time, making filling take longer but be better distributed between objects.");
@@ -218,7 +218,7 @@ namespace AutomaticFuel
             {
                 isOn.Value = !isOn.Value;
                 Config.Save();
-                Player.m_localPlayer.Message(MessageHud.MessageType.Center, string.Format(toggleString, isOn.Value), 0, null);
+                Player.m_localPlayer.Message(MessageHud.MessageType.Center, string.Format(toggleString, isOn.Value), 0, null, false);
             }
         }
 

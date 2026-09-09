@@ -139,9 +139,7 @@ namespace AutomaticFuel.GameClasses
 
                                     znview.InvokeRPC("RPC_AddFuel", new object[] { });
 
-                                    c.GetInventory().RemoveItem(fuelItems.m_itemData.m_shared.m_name, 1);
-                                    typeof(Container).GetMethod("Save", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c, new object[] { });
-                                    typeof(Inventory).GetMethod("Changed", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(c.GetInventory(), new object[] { });
+                                    TastyUtils.TakeOneFromContainer(c, fuelItems.m_itemData.m_shared.m_name);
                                     //if (AutomaticFuelPlugin.distributedFilling.Value)
                                     //    return;
                                 }
