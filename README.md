@@ -1,36 +1,58 @@
-# Automatic Fuel
+# OttoFuel
 
-### Updated for Hildir's Request
+### Updated for Valheim 1.0
 
-Fuels torches, campfires, windmills, spinning wheels, hearths, kilns and smelters
-- Fuels from the ground
-- Fuels from chests and custom chests
-- Stack Smelters - Default is True:  Removes most smoke and isblocked check
-- Remove the ServerSync Version and Client checks.  Default is True and does check.  Can be turned off in the config.
-- Blast Furnace can take all Fuel - NEW - 
+OttoFuel keeps your production burning. It pulls fuel and ore out of nearby chests
+and off the ground, then feeds them to the things that need them.
 
-I'll do my best to help with any issues.  
+**Maintainer:** Paul Otto
 
-[Reach Me on Discord](https://discord.gg/z5NrSZqP)
-### About the Mod:
-__________________
-
-
-#### now with ServerSync
-
-#### Mistlands Compatible
-
-This mod is a combination of my own code and scaled down version of Aedenthorn's AutoFuel mod.  
-
-Credit goes to Aedenthorn for the idea and original mod.
+**This mod is a fork of [AutomaticFuel](https://thunderstore.io/c/valheim/p/TastyChickenLegs/AutomaticFuel/) by TastyChickenLegs.**
+TastyChickenLegs built AutomaticFuel on the idea and original code of Aedenthorn's
+AutoFuel. Credit for the mod goes to both of them. OttoFuel carries that work
+forward under the same public-domain licence.
 
 --------------------
 
-Fuels torches, campfires, windmills, spinning wheels, hearths, kilns and smelters from items in chests or off the ground
+### What it fuels
 
-`A config file BepInEx/config/tastychickenlegs.automaticfuel.cfg is created after running the game once with this mod)`
+- Torches, standing torches, wall torches, braziers and campfires
+- Hearths and hot tubs
+- Smelters, blast furnaces, charcoal kilns, windmills and spinning wheels
+- **Stone ovens and any other cooking station that burns fuel (new in 1.5.0)**
+- Shield generators
 
-![ScreenShot](https://i.ibb.co/CBRDPKZ/spin.png)
+### Other features
+
+- Stacked smelters. Removes most smoke and the "smoke blocked" check.
+- The blast furnace accepts every ore.
+- Kiln output limit, so a kiln stops once you have enough coal.
+- Per-object switches, so you can turn any of it off.
+- ServerSync. A server pushes its config down to the clients.
+
+--------------------
+
+### Changes in this fork
+
+- **1.5.0** - Renamed to OttoFuel. Added stone oven and cooking station refuelling.
+- **1.4.9** - Ported to the Valheim 1.0 API. See the notes below.
+
+The 1.0 port covers these API breaks:
+
+| Break in Valheim 1.0 | Fix |
+| --- | --- |
+| `Character.Message` gained a `log` parameter | The argument is passed |
+| `Smelter.RPC_AddOre` gained a `cheated` parameter | Both call sites send it |
+| `Inventory.Changed` gained two parameters | Resolved through `AccessTools` |
+| `Inventory.RemoveItem` changed a default | The old behaviour is pinned |
+| `ZRoutedRpc.Everybody` became a constant | ServerSync rebuilt against 1.0 |
+
+--------------------
+
+`A config file BepInEx/config/PaulOtto.OttoFuel.cfg is created after you run the game once with this mod.`
+
+**Note for people who used AutomaticFuel:** the config file name changed, so your old
+settings do not carry over. Copy them across by hand if you want to keep them.
 
 You can adjust the config values by editing this file using a text editor or in-game using the Config Manager﻿.
 
@@ -53,6 +75,8 @@ You can adjust the config values by editing this file using a text editor or in-
 |RestrictKiln| Turn off the Kiln|
 |RefuelHotTub| Turn on and off refueling of hottub.. bathtub whatever|
 |RefuelHearth| Turn on and off the refueling of the hearth|
+|RefuelOvens| Turn on and off the refueling of stone ovens and other fuelled cooking stations|
+|OvenRange| The maximum range to pull fuel from containers for ovens|
 
 Custom Toggle key to turn on and off mod in-game. 
 

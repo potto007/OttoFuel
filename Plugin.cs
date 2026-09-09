@@ -9,14 +9,19 @@ using ServerSync;
 using UnityEngine;
 using HarmonyLib;
 
-namespace AutomaticFuel
+namespace OttoFuel
 {
     [BepInPlugin(ModGUID, ModName, ModVersion)]
-    public class AutomaticFuelPlugin : BaseUnityPlugin
+    public class OttoFuelPlugin : BaseUnityPlugin
     {
-        internal const string ModName = "AutomaticFuel";
-        internal const string ModVersion = "1.4.9";
-        internal const string Author = "TastyChickenLegs";
+        internal const string ModName = "OttoFuel";
+        internal const string ModVersion = "1.5.0";
+        // Author is the BepInEx GUID prefix, so it holds no space.
+        internal const string Author = "PaulOtto";
+        internal const string Maintainer = "Paul Otto";
+        // OttoFuel is a fork of AutomaticFuel by TastyChickenLegs.
+        internal const string OriginalAuthor = "TastyChickenLegs";
+        internal const string OriginalMod = "AutomaticFuel";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
         private static string ConfigFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
@@ -51,6 +56,8 @@ namespace AutomaticFuel
         public static ConfigEntry<bool> refuelBraziers;
         public static ConfigEntry<bool> turnOffKiln;
         public static ConfigEntry<bool> refuelHearth;
+        public static ConfigEntry<bool> refuelOvens;
+        public static ConfigEntry<float> ovenRange;
         public static ConfigEntry<bool> refuelHotTub;
         public static ConfigEntry<bool> turnOffWindmills;
         public static ConfigEntry<bool> turnOffSpinningWheel;
@@ -64,7 +71,7 @@ namespace AutomaticFuel
 
         private readonly Harmony _harmony = new(ModGUID);
 
-        public static readonly ManualLogSource AutomaticFuelLogger =
+        public static readonly ManualLogSource OttoFuelLogger =
             BepInEx.Logging.Logger.CreateLogSource(ModName);
 
         private static readonly ConfigSync ConfigSync = new(ModGUID)
@@ -123,6 +130,10 @@ namespace AutomaticFuel
             refuelWallTorches = config("Fireplace", "RefuelWallTorches", true, "Refuel wall torches");
             refuelFirePits = config("Fireplace", "RefuelFirePits", true, "Refuel fire pits");
             refuelHearth = config("Fireplace", "RefuelHearth", true, "Refuel Hearth");
+            refuelOvens = config("Oven", "RefuelOvens", true, "Refuel the stone oven and any other cooking station that burns fuel");
+            ovenRange = config("Oven", "OvenRange", 5f,
+                new ConfigDescription("The maximum range to pull fuel from containers for ovens",
+                new AcceptableValueRange<float>(1f, 50f)));
             restrictKilnOutput = config("Smelters", "RestrictKilnOutput", false, "Restrict kiln output");
             nofloorpickup = config("General", "Use Dropped Items for Fuel", true, "Use Dropped Items for Fuel");
 
@@ -160,13 +171,13 @@ namespace AutomaticFuel
             if (!File.Exists(ConfigFileFullPath)) return;
             try
             {
-                AutomaticFuelLogger.LogDebug("ReadConfigValues called");
+                OttoFuelLogger.LogDebug("ReadConfigValues called");
                 Config.Reload();
             }
             catch
             {
-                AutomaticFuelLogger.LogError($"There was an issue loading your {ConfigFileName}");
-                AutomaticFuelLogger.LogError("Please check your config entries for spelling and format!");
+                OttoFuelLogger.LogError($"There was an issue loading your {ConfigFileName}");
+                OttoFuelLogger.LogError("Please check your config entries for spelling and format!");
             }
         }
 
@@ -209,7 +220,7 @@ namespace AutomaticFuel
         public static void Dbgl(string str = "", bool pref = true)
         {
             if (isDebug)
-                Debug.Log((pref ? typeof(AutomaticFuelPlugin).Namespace + " " : "") + str);
+                Debug.Log((pref ? typeof(OttoFuelPlugin).Namespace + " " : "") + str);
         }
 
         private void Update()

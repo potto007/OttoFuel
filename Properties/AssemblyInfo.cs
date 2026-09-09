@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using AutomaticFuel;
+using OttoFuel;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle(AutomaticFuelPlugin.ModName)]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle(OttoFuelPlugin.ModName)]
+[assembly: AssemblyDescription("Automatic fuel for fireplaces, smelters, ovens and shield generators. A fork of AutomaticFuel by TastyChickenLegs.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(AutomaticFuelPlugin.Author)]
-[assembly: AssemblyProduct(AutomaticFuelPlugin.ModName)]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCompany(OttoFuelPlugin.Maintainer)]
+[assembly: AssemblyProduct(OttoFuelPlugin.ModName)]
+[assembly: AssemblyCopyright("Copyright © 2021 TastyChickenLegs, © 2026 Paul Otto")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using AutomaticFuel;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(AutomaticFuelPlugin.ModVersion)]
-[assembly: AssemblyFileVersion(AutomaticFuelPlugin.ModVersion)]
+[assembly: AssemblyVersion(OttoFuelPlugin.ModVersion)]
+[assembly: AssemblyFileVersion(OttoFuelPlugin.ModVersion)]

@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="environment.props" />
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <AssemblyName>AutomaticFuel</AssemblyName>
-    <RootNamespace>AutomaticFuel</RootNamespace>
+    <AssemblyName>OttoFuel</AssemblyName>
+    <RootNamespace>OttoFuel</RootNamespace>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -52,4 +52,36 @@
   <Target Name="CopyOutputDLL" AfterTargets="ILRepacker" Condition="'$(CopyOutputDLLPath)' != '' AND Exists('$(CopyOutputDLLPath)')">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyOutputDLLPath)" OverwriteReadOnlyFiles="true" />
   </Target>
+
+  <!-- Read the version out of Thunderstore/manifest.json so one file drives the package. -->
+  <Target Name="ReadManifestVersion" AfterTargets="ILRepacker" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <ManifestJson>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/Thunderstore/manifest.json'))</ManifestJson>
+      <PluginSource>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/Plugin.cs'))</PluginSource>
+      <ModVersionFromSource>$([System.Text.RegularExpressions.Regex]::Match($(PluginSource), 'ModVersion\s*=\s*"([^"]+)"').Groups[1].Value)</ModVersionFromSource>
+      <PackageVersion>$([System.Text.RegularExpressions.Regex]::Match($(ManifestJson), '"version_number"\s*:\s*"([^"]+)"').Groups[1].Value)</PackageVersion>
+      <PackageStageDir>$(MSBuildProjectDirectory)/obj/thunderstore/$(AssemblyName)_v$(PackageVersion)</PackageStageDir>
+      <PackageZip>$(MSBuildProjectDirectory)/Thunderstore/$(AssemblyName)_v$(PackageVersion).zip</PackageZip>
+    </PropertyGroup>
+    <Error Condition="'$(PackageVersion)' == ''" Text="Could not read version_number from Thunderstore/manifest.json." />
+    <Error Condition="'$(PackageVersion)' != '$(ModVersionFromSource)' AND '$(ModVersionFromSource)' != ''" Text="Version drift: Thunderstore/manifest.json says $(PackageVersion), Plugin.cs ModVersion says $(ModVersionFromSource). Bump both." />
+  </Target>
+
+  <!-- Build the Thunderstore zip that the publish workflow uploads. -->
+  <Target Name="MakeThunderstorePackage" AfterTargets="ReadManifestVersion" Condition="'$(Configuration)' == 'Release'">
+    <RemoveDir Directories="$(PackageStageDir)" />
+    <MakeDir Directories="$(PackageStageDir)" />
+    <ItemGroup>
+      <PackageFiles Include="$(TargetPath)" />
+      <PackageFiles Include="$(MSBuildProjectDirectory)/Thunderstore/manifest.json" />
+      <PackageFiles Include="$(MSBuildProjectDirectory)/Thunderstore/icon.png" />
+      <PackageFiles Include="$(MSBuildProjectDirectory)/README.md" />
+      <PackageFiles Include="$(MSBuildProjectDirectory)/LICENSE.txt" />
+    </ItemGroup>
+    <Error Condition="!Exists('$(MSBuildProjectDirectory)/Thunderstore/icon.png')" Text="Thunderstore/icon.png is missing. It must be 256x256." />
+    <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(PackageStageDir)" />
+    <ZipDirectory SourceDirectory="$(PackageStageDir)" DestinationFile="$(PackageZip)" Overwrite="true" />
+    <Message Importance="high" Text="Thunderstore package: $(PackageZip)" />
+  </Target>
+
 </Project>

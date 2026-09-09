@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HarmonyLib;
-using AutomaticFuel;
+using OttoFuel;
 using UnityEngine;
 using System.Reflection;
 using System.CodeDom;
 
 
-namespace AutomaticFuel.GameClasses
+namespace OttoFuel.GameClasses
 {
     internal class Smelters
     {
@@ -36,7 +36,7 @@ namespace AutomaticFuel.GameClasses
         {
             private static void Prefix(ref Smelter __instance)
             {
-                if (AutomaticFuel.AutomaticFuelPlugin.configBlastFurnaceTakesAll.Value)
+                if (OttoFuel.OttoFuelPlugin.configBlastFurnaceTakesAll.Value)
                 {
                     if (__instance.m_name != "$piece_blastfurnace")
                     {
@@ -46,7 +46,7 @@ namespace AutomaticFuel.GameClasses
                     ObjectDB instance = ObjectDB.instance;
                     List<ItemDrop> materials = instance.GetAllItems(ItemDrop.ItemData.ItemType.Material, "");
                     
-                    if (AutomaticFuelPlugin.nofloorpickup.Value)
+                    if (OttoFuelPlugin.nofloorpickup.Value)
                     {
                         foreach (ItemDrop material in materials)
                         {
@@ -87,7 +87,7 @@ namespace AutomaticFuel.GameClasses
             {
                 if (__instance.m_smokeSpawner != null)
                 {
-                    if (AutomaticFuelPlugin.configStackSmelters.Value)
+                    if (OttoFuelPlugin.configStackSmelters.Value)
                     {
                         __instance.m_smokeSpawner.enabled = false;
                         TastyUtils.SetSmelterBlockedSmoke(__instance, false);
@@ -106,30 +106,30 @@ namespace AutomaticFuel.GameClasses
                 //if (__instance.name.Contains("piece_spinningwheel"))
                 //    __instance.m_haveRoof = true;
 
-                if (!Player.m_localPlayer || !AutomaticFuelPlugin.isOn.Value || ___m_nview == null || !___m_nview.IsOwner())
+                if (!Player.m_localPlayer || !OttoFuelPlugin.isOn.Value || ___m_nview == null || !___m_nview.IsOwner())
                     return;
-                if (__instance.name.Contains("charcoal_kiln") && AutomaticFuelPlugin.turnOffKiln.Value)
+                if (__instance.name.Contains("charcoal_kiln") && OttoFuelPlugin.turnOffKiln.Value)
                     return;
-                if (__instance.name.Contains("piece_spinningwheel") && AutomaticFuelPlugin.turnOffSpinningWheel.Value)
+                if (__instance.name.Contains("piece_spinningwheel") && OttoFuelPlugin.turnOffSpinningWheel.Value)
                     return;
-                if (__instance.name.Contains("windmill") && AutomaticFuelPlugin.turnOffWindmills.Value)
+                if (__instance.name.Contains("windmill") && OttoFuelPlugin.turnOffWindmills.Value)
                     return;
-                if (__instance.name.Contains("$piece_smelter") && AutomaticFuelPlugin.turnoffSmelter.Value)
+                if (__instance.name.Contains("$piece_smelter") && OttoFuelPlugin.turnoffSmelter.Value)
                     return;
-                if (__instance.name.Contains("$piece_blastfurnace") && AutomaticFuelPlugin.turnoffBlastFurnace.Value)
+                if (__instance.name.Contains("$piece_blastfurnace") && OttoFuelPlugin.turnoffBlastFurnace.Value)
                     return;
                 // added to turn off blast furnace and smelter.  03/02/26
 
 
-                if (Time.time - AutomaticFuelPlugin.lastFuel < 0.1)
+                if (Time.time - OttoFuelPlugin.lastFuel < 0.1)
                 {
-                    AutomaticFuelPlugin.fuelCount++;
-                    RefuelSmelter(__instance, ___m_nview, AutomaticFuelPlugin.fuelCount * 33);
+                    OttoFuelPlugin.fuelCount++;
+                    RefuelSmelter(__instance, ___m_nview, OttoFuelPlugin.fuelCount * 33);
                 }
                 else
                 {
-                    AutomaticFuelPlugin.fuelCount = 0;
-                    AutomaticFuelPlugin.lastFuel = Time.time;
+                    OttoFuelPlugin.fuelCount = 0;
+                    OttoFuelPlugin.lastFuel = Time.time;
                     RefuelSmelter(__instance, ___m_nview, 0);
                 }
             }
@@ -141,23 +141,23 @@ namespace AutomaticFuel.GameClasses
         {
             await Task.Delay(delay);
 
-            if (!__instance || !___m_nview || !___m_nview.IsValid() || !AutomaticFuelPlugin.modEnabled.Value)
+            if (!__instance || !___m_nview || !___m_nview.IsValid() || !OttoFuelPlugin.modEnabled.Value)
                 return;
 
             int maxOre = __instance.m_maxOre - Traverse.Create(__instance).Method("GetQueueSize").GetValue<int>();
             int maxFuel = __instance.m_maxFuel - Mathf.CeilToInt(___m_nview.GetZDO().GetFloat("fuel", 0f));
 
             List<Container> nearbyOreContainers = TastyUtils.GetNearbyContainers
-                (__instance.transform.position, AutomaticFuelPlugin.smelterOreRange.Value);
+                (__instance.transform.position, OttoFuelPlugin.smelterOreRange.Value);
 
             List<Container> nearbyFuelContainers = TastyUtils.GetNearbyContainers
-                (__instance.transform.position, AutomaticFuelPlugin.smelterFuelRange.Value);
-           // AutomaticFuel.AutomaticFuelPlugin.AutomaticFuelLogger.LogInfo(__instance.name);
+                (__instance.transform.position, OttoFuelPlugin.smelterFuelRange.Value);
+           // OttoFuel.OttoFuelPlugin.OttoFuelLogger.LogInfo(__instance.name);
 
-            if (__instance.name.Contains("charcoal_kiln") && AutomaticFuelPlugin.restrictKilnOutput.Value)
+            if (__instance.name.Contains("charcoal_kiln") && OttoFuelPlugin.restrictKilnOutput.Value)
             {
                 string outputName = __instance.m_conversion[0].m_to.m_itemData.m_shared.m_name;
-                int maxOutput = AutomaticFuelPlugin.restrictKilnOutputAmount.Value - Traverse.Create(__instance).Method("GetQueueSize").GetValue<int>();
+                int maxOutput = OttoFuelPlugin.restrictKilnOutputAmount.Value - Traverse.Create(__instance).Method("GetQueueSize").GetValue<int>();
                 foreach (Container c in nearbyOreContainers)
                 {
                     List<ItemDrop.ItemData> itemList = new List<ItemDrop.ItemData>();
@@ -179,7 +179,7 @@ namespace AutomaticFuel.GameClasses
             bool ored = false;
 
             Vector3 position = __instance.transform.position + Vector3.up;
-            foreach (Collider collider in Physics.OverlapSphere(position, AutomaticFuelPlugin.dropRange.Value, LayerMask.GetMask(new string[] { "item" })))
+            foreach (Collider collider in Physics.OverlapSphere(position, OttoFuelPlugin.dropRange.Value, LayerMask.GetMask(new string[] { "item" })))
             {
                 if (collider?.attachedRigidbody)
                 {
@@ -190,7 +190,7 @@ namespace AutomaticFuel.GameClasses
                         continue;
 
                     string name = TastyUtils.GetPrefabName(item.gameObject.name);
-                    if (AutomaticFuelPlugin.nofloorpickup.Value)
+                    if (OttoFuelPlugin.nofloorpickup.Value)
                     {
                         foreach (Smelter.ItemConversion itemConversion in __instance.m_conversion)
                         {
@@ -198,13 +198,13 @@ namespace AutomaticFuel.GameClasses
                                 break;
                             if (item.m_itemData.m_shared.m_name == itemConversion.m_from.m_itemData.m_shared.m_name && maxOre > 0)
                             {
-                                if (AutomaticFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(name))
+                                if (OttoFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(name))
                                 {
                                     //Dbgl($"container at {c.transform.position} has {item.m_itemData.m_stack} {item.m_dropPrefab.name} but it's forbidden by config");
                                     continue;
                                 }
 
-                                AutomaticFuelPlugin.Dbgl($"auto adding ore {name} from ground");
+                                OttoFuelPlugin.Dbgl($"auto adding ore {name} from ground");
 
                                 int amount = Mathf.Min(item.m_itemData.m_stack, maxOre);
                                 maxOre -= amount;
@@ -214,11 +214,11 @@ namespace AutomaticFuel.GameClasses
                                     if (item.m_itemData.m_stack <= 1)
                                     {
                                         if (___m_nview.GetZDO() == null)
-                                            AutomaticFuelPlugin.Destroy(item.gameObject);
+                                            OttoFuelPlugin.Destroy(item.gameObject);
                                         else
                                             ZNetScene.instance.Destroy(item.gameObject);
                                         ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name, false });
-                                        if (AutomaticFuelPlugin.distributedFilling.Value)
+                                        if (OttoFuelPlugin.distributedFilling.Value)
                                             ored = true;
                                         break;
                                     }
@@ -226,7 +226,7 @@ namespace AutomaticFuel.GameClasses
                                     item.m_itemData.m_stack--;
                                     ___m_nview.InvokeRPC("RPC_AddOre", new object[] { name, false });
                                     Traverse.Create(item).Method("Save").GetValue();
-                                    if (AutomaticFuelPlugin.distributedFilling.Value)
+                                    if (OttoFuelPlugin.distributedFilling.Value)
                                         ored = true;
                                 }
                             }
@@ -237,15 +237,15 @@ namespace AutomaticFuel.GameClasses
                     { 
                         //added for the dont pick u from floor
 
-                        if (AutomaticFuelPlugin.nofloorpickup.Value)
+                        if (OttoFuelPlugin.nofloorpickup.Value)
                         {
-                            if (AutomaticFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(name))
+                            if (OttoFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(name))
                             {
                                 //Dbgl($"ground has {item.m_itemData.m_dropPrefab.name} but it's forbidden by config");
                                 continue;
                             }
 
-                            AutomaticFuelPlugin.Dbgl($"auto adding fuel {name} from ground");
+                            OttoFuelPlugin.Dbgl($"auto adding fuel {name} from ground");
 
                             int amount = Mathf.Min(item.m_itemData.m_stack, maxFuel);
                             maxFuel -= amount;
@@ -255,11 +255,11 @@ namespace AutomaticFuel.GameClasses
                                 if (item.m_itemData.m_stack <= 1)
                                 {
                                     if (___m_nview.GetZDO() == null)
-                                        AutomaticFuelPlugin.Destroy(item.gameObject);
+                                        OttoFuelPlugin.Destroy(item.gameObject);
                                     else
                                         ZNetScene.instance.Destroy(item.gameObject);
                                     ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
-                                    if (AutomaticFuelPlugin.distributedFilling.Value)
+                                    if (OttoFuelPlugin.distributedFilling.Value)
                                         fueled = true;
                                     break;
                                 }
@@ -267,7 +267,7 @@ namespace AutomaticFuel.GameClasses
                                 item.m_itemData.m_stack--;
                                 ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
                                 Traverse.Create(item).Method("Save").GetValue();
-                                if (AutomaticFuelPlugin.distributedFilling.Value)
+                                if (OttoFuelPlugin.distributedFilling.Value)
                                 {
                                     fueled = true;
                                     break;
@@ -289,17 +289,17 @@ namespace AutomaticFuel.GameClasses
 
                     foreach (var oreItem in itemList)
                     {
-                        if (oreItem != null && maxOre > 0 && (!AutomaticFuelPlugin.leaveLastItem.Value || oreItem.m_stack > 1))
+                        if (oreItem != null && maxOre > 0 && (!OttoFuelPlugin.leaveLastItem.Value || oreItem.m_stack > 1))
                         {
-                            if (AutomaticFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(oreItem.m_dropPrefab.name))
+                            if (OttoFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(oreItem.m_dropPrefab.name))
                                 continue;
                             maxOre--;
 
-                            AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {oreItem.m_stack} {oreItem.m_dropPrefab.name}, taking one");
+                            OttoFuelPlugin.Dbgl($"container at {c.transform.position} has {oreItem.m_stack} {oreItem.m_dropPrefab.name}, taking one");
 
                             ___m_nview.InvokeRPC("RPC_AddOre", new object[] { oreItem.m_dropPrefab?.name, false });
                             TastyUtils.TakeOneFromContainer(c, itemConversion.m_from.m_itemData.m_shared.m_name);
-                            if (AutomaticFuelPlugin.distributedFilling.Value)
+                            if (OttoFuelPlugin.distributedFilling.Value)
                             {
                                 ored = true;
                                 break;
@@ -318,21 +318,21 @@ namespace AutomaticFuel.GameClasses
 
                 foreach (var fuelItem in itemList)
                 {
-                    if (fuelItem != null && (!AutomaticFuelPlugin.leaveLastItem.Value || fuelItem.m_stack > 1))
+                    if (fuelItem != null && (!OttoFuelPlugin.leaveLastItem.Value || fuelItem.m_stack > 1))
                     {
                         maxFuel--;
-                        if (AutomaticFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(fuelItem.m_dropPrefab.name))
+                        if (OttoFuelPlugin.fuelDisallowTypes.Value.Split(',').Contains(fuelItem.m_dropPrefab.name))
                         {
                             //Dbgl($"container at {c.transform.position} has {item.m_stack} {item.m_dropPrefab.name} but it's forbidden by config");
                             continue;
                         }
 
-                        AutomaticFuelPlugin.Dbgl($"container at {c.transform.position} has {fuelItem.m_stack} {fuelItem.m_dropPrefab.name}, taking one");
+                        OttoFuelPlugin.Dbgl($"container at {c.transform.position} has {fuelItem.m_stack} {fuelItem.m_dropPrefab.name}, taking one");
 
                         ___m_nview.InvokeRPC("RPC_AddFuel", new object[] { });
 
                         TastyUtils.TakeOneFromContainer(c, __instance.m_fuelItem.m_itemData.m_shared.m_name);
-                        if (AutomaticFuelPlugin.distributedFilling.Value)
+                        if (OttoFuelPlugin.distributedFilling.Value)
                         {
                             fueled = true;
                             break;

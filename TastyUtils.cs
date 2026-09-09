@@ -6,7 +6,7 @@ using UnityEngine;
 
 //Original Aedenthorn Utilities has been renamed to TastyUtils as I add my own custom items in the future
 //Idea, code and credit go back to the original author
-namespace AutomaticFuel
+namespace OttoFuel
 {
     public class TastyUtils
     {
@@ -100,14 +100,14 @@ namespace AutomaticFuel
         {
             try
             {
-                AutomaticFuelPlugin.AutomaticFuelLogger.LogDebug(
+                OttoFuelPlugin.OttoFuelLogger.LogDebug(
                     $"Checking {container.name} {nview != null} {nview?.GetZDO() != null} {nview?.GetZDO()?.GetLong("creator".GetStableHashCode())}");
                 if (container.GetInventory() == null || nview?.GetZDO() == null ||
                     (!container.name.StartsWith("piece_", StringComparison.Ordinal) &&
                      !container.name.StartsWith("Container", StringComparison.Ordinal) &&
                      nview.GetZDO().GetLong("creator".GetStableHashCode()) == 0)) return;
-                AutomaticFuelPlugin.AutomaticFuelLogger.LogDebug($"Adding {container.name}");
-                AutomaticFuelPlugin.ContainerList.Add(container);
+                OttoFuelPlugin.OttoFuelLogger.LogDebug($"Adding {container.name}");
+                OttoFuelPlugin.ContainerList.Add(container);
             }
             catch
             {
@@ -118,7 +118,7 @@ namespace AutomaticFuel
         public static List<Container> GetNearbyContainers(Vector3 center, float range)
         {
             List<Container> containers = new();
-            foreach (Container container in AutomaticFuelPlugin.ContainerList.Where(container => container != null &&
+            foreach (Container container in OttoFuelPlugin.ContainerList.Where(container => container != null &&
                          container.GetComponentInParent<Piece>() != null && Player.m_localPlayer != null &&
                          container?.transform != null && container.GetInventory() != null && (range <= 0 ||
                              Vector3.Distance(center, container.transform.position) <
@@ -133,7 +133,7 @@ namespace AutomaticFuel
                 {
                     container.Load();
                     containers.Add(container);
-                   // AutomaticFuelPlugin.AutomaticFuelLogger.LogMessage(container);
+                   // OttoFuelPlugin.OttoFuelLogger.LogMessage(container);
                     continue;
                 }
                 else
