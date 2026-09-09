@@ -49,7 +49,7 @@ The 1.0 port covers these API breaks:
 
 --------------------
 
-`A config file BepInEx/config/PaulOtto.OttoFuel.cfg is created after you run the game once with this mod.`
+`A config file BepInEx/config/potto007.OttoFuel.cfg is created after you run the game once with this mod.`
 
 **Note for people who used AutomaticFuel:** the config file name changed, so your old
 settings do not carry over. Copy them across by hand if you want to keep them.

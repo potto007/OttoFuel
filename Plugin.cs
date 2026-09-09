@@ -16,8 +16,8 @@ namespace OttoFuel
     {
         internal const string ModName = "OttoFuel";
         internal const string ModVersion = "1.5.0";
-        // Author is the BepInEx GUID prefix, so it holds no space.
-        internal const string Author = "PaulOtto";
+        // Author is the BepInEx GUID prefix and the Thunderstore namespace.
+        internal const string Author = "potto007";
         internal const string Maintainer = "Paul Otto";
         // OttoFuel is a fork of AutomaticFuel by TastyChickenLegs.
         internal const string OriginalAuthor = "TastyChickenLegs";

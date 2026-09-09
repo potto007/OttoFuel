@@ -56,11 +56,6 @@ jobs:
             exit 1
           fi
 
-          if [ -z "${{ vars.THUNDERSTORE_NAMESPACE }}" ]; then
-            echo "::error::Repository variable THUNDERSTORE_NAMESPACE is not set." >&2
-            exit 1
-          fi
-
           {
             echo "tag=${tag}"
             echo "mod_name=${mod_name}"
@@ -90,7 +85,8 @@ jobs:
       - name: Publish the package to Thunderstore
         uses: GreenTF/upload-thunderstore-package@v4.3
         with:
-          namespace: ${{ vars.THUNDERSTORE_NAMESPACE }}
+          # Override with the repository variable THUNDERSTORE_NAMESPACE if the team changes.
+          namespace: ${{ vars.THUNDERSTORE_NAMESPACE || 'potto007' }}
           name: ${{ steps.manifest.outputs.mod_name }}
           description: ${{ steps.manifest.outputs.mod_description }}
           version: ${{ steps.manifest.outputs.mod_version }}
