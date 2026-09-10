@@ -40,41 +40,51 @@ never touches an OttoFuel config that already exists.
 On a clean install OttoFuel writes a starter config with `LeaveLastItem = true`, so
 it never empties a chest to zero. Every other setting keeps its stock value.
 
-You can adjust the config values by editing this file using a text editor or in-game using the Config Manager﻿.
+Every setting lives in `BepInEx/config/potto007.OttoFuel.cfg`, and you can change it in a
+text editor or in game through Configuration Manager. The names follow the Ottomation
+series spelling. A config from an earlier OttoFuel, or one carried over from AutomaticFuel,
+is renamed in place on first load, so your values carry over.
 
-|Config Option|Definition
-|---|---|
-|verifyClient| This turns on and off the need to verify other clients.  Users can now play without the mod on a server with the mod.|
-|fireplaceRange| The maximum range to pull fuel from containers for fireplaces|
-|smelterOreRange| The maximum range to pull fuel from containers for smelters|
-|smelterFuelRange| The maximum range to pull ore from containers for smelters|
-|fuelDisallowTypes| Types of item to disallow as fuel (i.e. anything that is consumed), comma-separated.|
-|oreDisallowTypes| Types of item to disallow as ore (i.e. anything that is transformed), comma-separated).|
-|refuelStandingTorches| Refuel standing torches|
-|refuelWallTorches| Refuel wall torches|
-|refuelFirePits| Refuel fire pits|
-|restrictKilnOutput| Restrict kiln output|
-|restrictKilnOutputAmount| Amount of coal to shut off kiln fueling|
-|distributedFilling| If true, refilling will occur one piece of fuel or ore at a time, making filling take longer but be better distributed between objects|
-|leaveLastItem| Don't use last of item in chest|
-|StackSmelters| Allow the ability to stack smelters and kilns.  Turns off the smoke and prohibits the blocked smoke check.|
-|RestrictKiln| Turn off the Kiln|
-|RefuelHotTub| Turn on and off refueling of hottub.. bathtub whatever|
-|RefuelHearth| Turn on and off the refueling of the hearth|
-|RefuelOvens| Turn on and off the refueling of stone ovens and other fuelled cooking stations|
-|OvenRange| The maximum range to pull fuel from containers for ovens|
-
-Custom Toggle key to turn on and off mod in-game. 
-
-You can adjust the ranges for containers and ground pulling (default 10 meters each).
-
-Reset the config by opening the in-game console `(F5)` and typing autofuel reset and pressing Enter.
+| Section | Key | Default | What it does |
+| --- | --- | --- | --- |
+| General | `Enabled` | `true` | Turns the mod on or off. |
+| General | `IsOn` | `true` | Whether fueling is currently on. |
+| General | `ToggleKey` | `F10` | The key that toggles fueling. Leave it blank to disable the key. |
+| General | `LockConfiguration` | `On` | When on, only a server admin can change the settings. |
+| General | `DropRange` | `15` | How far, 1 to 50 meters, to pull dropped fuel. |
+| General | `UseDroppedItemsForFuel` | `true` | Use fuel lying on the ground, not only fuel in chests. |
+| Fireplace | `FireplaceRange` | `5` | How far, 1 to 50 meters, to pull fuel from chests for fires. |
+| Fireplace | `FuelDisallowTypes` | `RoundLog,FineWood` | Items never used as fuel, comma separated. |
+| Fireplace | `RefuelStandingTorches` | `true` | Refuel standing torches. |
+| Fireplace | `RefuelWallTorches` | `true` | Refuel wall torches. |
+| Fireplace | `RefuelBraziers` | `true` | Refuel braziers. |
+| Fireplace | `RefuelFirePits` | `true` | Refuel fire pits. |
+| Fireplace | `RefuelHearth` | `true` | Refuel hearths. |
+| Fireplace | `RefuelHotTub` | `true` | Refuel hot tubs. |
+| Oven | `RefuelOvens` | `true` | Refuel the stone oven and any other cooking station that burns fuel. |
+| Oven | `OvenRange` | `5` | How far, 1 to 50 meters, to pull fuel from chests for ovens. |
+| Smelters | `SmelterOreRange` | `15` | How far, 1 to 50 meters, to pull ore from chests for smelters. |
+| Smelters | `SmelterFuelRange` | `15` | How far, 1 to 50 meters, to pull fuel from chests for smelters. |
+| Smelters | `OreDisallowTypes` | `RoundLog,FineWood` | Items never used as ore, comma separated. |
+| Smelters | `LeaveLastItem` | `false` | Leave the last item in a chest instead of emptying it. A clean install writes `true`. |
+| Smelters | `DistributedFueling` | `true` | Add one piece of fuel or ore at a time, so it spreads across every smelter. |
+| Smelters | `AllowStackSmelters` | `false` | Let smelters and kilns stack, which drops the smoke and the smoke blocked check. |
+| Smelters | `BlastFurnaceTakesAll` | `true` | Let the blast furnace take every ore. |
+| Smelters | `RestrictKilnOutput` | `false` | Stop fueling kilns past a coal limit. |
+| Smelters | `RestrictKilnOutputAmount` | `50` | The amount of coal, 1 to 1000, that shuts off kiln fueling. |
+| Smelters | `TurnOffKiln` | `false` | Leave kilns alone. |
+| Smelters | `TurnOffSmelter` | `false` | Leave smelters alone. |
+| Smelters | `TurnOffBlastFurnace` | `false` | Leave blast furnaces alone. |
+| Smelters | `TurnOffWindmills` | `false` | Leave windmills alone. |
+| Smelters | `TurnOffSpinningWheel` | `false` | Leave spinning wheels alone. |
 
 ___________________________
 #### Installation: (manual)  
 
-Extract DLL from zip file into `"<GameDirectory>\Bepinex\plugins"`  
-Start the game.
+Extract the DLL from the zip file into `<GameDirectory>\BepInEx\plugins`, and install
+[Ottomation_ModLib](https://thunderstore.io/c/valheim/p/potto007/Ottomation_ModLib/) and
+[Jotunn](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/) the same way. OttoFuel uses
+the library for its config handling, and the library needs Jotunn. Then start the game.
 ___________________________
 #### Installation (Automatic)
 Use the R2Modmanager on Thunderstore.  Search for the mod and install
@@ -87,8 +97,6 @@ The server config will push down.
 
 For Servers that cannot use mods, simply install this on the clients only and it will work just fine.  Clients will all need
 the same settings in their config files for optimal results.
-
-For people that run a server and don't want to verify clients turn the "verifyclients" setting off.
 ``````
 ### Version Information
 

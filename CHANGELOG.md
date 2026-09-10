@@ -3,6 +3,22 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.6.0
+- Depends on Ottomation_ModLib 1.16.0, which brings Jotunn with it. OttoFuel uses the
+  library for its config handling, and keeps ServerSync for syncing settings, so
+  `LockConfiguration` works as before.
+- Config names follow the Ottomation series spelling. `Lock Configuration` is now
+  `LockConfiguration`, `Use Dropped Items for Fuel` is now `UseDroppedItemsForFuel`, and
+  the `Turn Off` switches lose their spaces, so `Turn Off Kiln` is now `TurnOffKiln`.
+  `IsOn` and `Enabled` move out of an unnamed section into `General`, and the old
+  `1 - General` section merges into `General`.
+- Your values carry over. On first load the library renames your config in place before
+  OttoFuel reads it, and a config carried over from AutomaticFuel goes through the same
+  rename.
+- The README config table now lists the real setting names. The old table named
+  settings like `fireplaceRange` that never matched the file, a `verifyClient` setting
+  the mod does not have, and an `autofuel reset` console command that does not exist.
+
 ## v1.5.3
 - Carries your AutomaticFuel settings over on first run. If a
   `TastyChickenLegs.AutomaticFuel.cfg` exists and no OttoFuel config does, OttoFuel

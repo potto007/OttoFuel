@@ -7,6 +7,7 @@
             <InputAssemblies Include="$(OutputPath)ServerSync.dll" />
             <!-- ILRepack resolves the game and BepInEx assemblies from these folders. -->
             <ILRepackLibraryPath Include="$(OutputPath)" />
+            <ILRepackLibraryPath Include="$(MSBuildProjectDirectory)/Libs" />
             <ILRepackLibraryPath Include="$(BepInExPath)/core" />
             <ILRepackLibraryPath Include="$(CorlibPath)" />
         </ItemGroup>
