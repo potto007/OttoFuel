@@ -36,6 +36,7 @@ forward under the same public-domain licence.
 
 ### Changes in this fork
 
+- **1.5.1** - New title banner and package icon.
 - **1.5.0** - Renamed to OttoFuel. Added stone oven and cooking station refuelling.
 - **1.4.9** - Ported to the Valheim 1.0 API. See the notes below.
 

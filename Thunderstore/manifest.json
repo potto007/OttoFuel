@@ -1,7 +1,7 @@
 {
   "name": "OttoFuel",
   "description": "Auto-fuels smelters, kilns, ovens, torches, windmills and shield generators from nearby chests. Fork of AutomaticFuel.",
-  "version_number": "1.5.0",
+  "version_number": "1.5.1",
   "website_url": "https://github.com/potto007/OttoFuel",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2101"
