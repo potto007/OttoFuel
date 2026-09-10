@@ -101,6 +101,7 @@ namespace OttoFuel
             // binds, so a renamed setting keeps its value. See Ottomation_ModLib ADR-0007
             // and ADR-0008.
             global::Ottomation.Lib.Config.ConfigNameMigration.Apply(Config, Logger);
+            global::Ottomation.Lib.Config.ConfigHeader.BindAuthor(Config);
 
 
             _serverConfigLocked = config("General", "LockConfiguration", Toggle.On,

@@ -18,6 +18,8 @@ AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 - The README config table now lists the real setting names. The old table named
   settings like `fireplaceRange` that never matched the file, a `verifyClient` setting
   the mod does not have, and an `autofuel reset` console command that does not exist.
+- The config file starts with an `_Author` section, the same as the rest of the
+  Ottomation series.
 
 ## v1.5.3
 - Carries your AutomaticFuel settings over on first run. If a
