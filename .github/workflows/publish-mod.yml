@@ -69,7 +69,7 @@ jobs:
         run: |
           set -euo pipefail
           unzip -l "${{ steps.manifest.outputs.zip_file }}"
-          for required in "${{ steps.manifest.outputs.mod_name }}.dll" manifest.json icon.png README.md; do
+          for required in "${{ steps.manifest.outputs.mod_name }}.dll" manifest.json icon.png README.md CHANGELOG.md; do
             unzip -l "${{ steps.manifest.outputs.zip_file }}" | grep -q " ${required}$" \
               || { echo "::error::${required} is missing from the package." >&2; exit 1; }
           done
@@ -95,4 +95,7 @@ jobs:
           repo: https://thunderstore.io/c/valheim/
           file: ${{ steps.manifest.outputs.zip_file }}
           categories: |
-            tools
+            utility
+            tweaks
+            client-side
+            server-side

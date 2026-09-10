@@ -9,12 +9,8 @@ and off the ground, then feeds them to the things that need them.
 
 **Maintainer:** Paul Otto
 
-**This mod is a fork of [AutomaticFuel](https://thunderstore.io/c/valheim/p/TastyChickenLegs/AutomaticFuel/) by TastyChickenLegs.**
-TastyChickenLegs built AutomaticFuel on the idea and original code of Aedenthorn's
-AutoFuel. Credit for the mod goes to both of them. OttoFuel carries that work
-forward under the same public-domain licence.
-
 --------------------
+
 
 ### What it fuels
 
@@ -34,23 +30,6 @@ forward under the same public-domain licence.
 
 --------------------
 
-### Changes in this fork
-
-- **1.5.1** - New title banner and package icon.
-- **1.5.0** - Renamed to OttoFuel. Added stone oven and cooking station refuelling.
-- **1.4.9** - Ported to the Valheim 1.0 API. See the notes below.
-
-The 1.0 port covers these API breaks:
-
-| Break in Valheim 1.0 | Fix |
-| --- | --- |
-| `Character.Message` gained a `log` parameter | The argument is passed |
-| `Smelter.RPC_AddOre` gained a `cheated` parameter | Both call sites send it |
-| `Inventory.Changed` gained two parameters | Resolved through `AccessTools` |
-| `Inventory.RemoveItem` changed a default | The old behaviour is pinned |
-| `ZRoutedRpc.Everybody` became a constant | ServerSync rebuilt against 1.0 |
-
---------------------
 
 `A config file BepInEx/config/potto007.OttoFuel.cfg is created after you run the game once with this mod.`
 
@@ -108,152 +87,27 @@ the same settings in their config files for optimal results.
 For people that run a server and don't want to verify clients turn the "verifyclients" setting off.
 ``````
 ### Version Information
-___________________________
 
-1.4.7
+The full release history lives in [CHANGELOG.md](CHANGELOG.md), and it renders on
+the Changelog tab of the Thunderstore package page.
 
-option to disable blast furnace and smelter default is on
-Added ability to turn off using floor drops for fuel
 
-1.4.6
+## Credits
 
-Updated for newest patch and added Shield Generators
+OttoFuel is maintained by **Paul Otto**.
 
+It continues [AutomaticFuel](https://thunderstore.io/c/valheim/p/TastyChickenLegs/AutomaticFuel/)
+by **TastyChickenLegs**, who built that mod on the idea and original code of
+**Aedenthorn's** AutoFuel. Credit for the mod belongs to both of them. OttoFuel
+carries their work forward under the same public-domain licence.
 
-1.4.5
+### More mods by TastyChickenLegs
 
-Updated server sync
-
-1.4.4
-
-Updated for The Bog Witch version 
-
-
-1.4.3
-
-Updated for newest version
-Added Iron Ore to the list of items to be made in Blast Furnace
--- Thanks EiraValkyrie for reporting the problem
-
-1.4.2
-
-removed for errors in build
-
-
-1.4.1 
-
-Updated for final release of Ashlands.
-
-
-
-1.4.0
-
-updated for Valheim 0.218.12  Ashlands PTB  
-
-THIS VERSION WILL NOT WORK IN ANYTHING BELOW 0.218
-Use the older version for non Ashalands Versions.
-
-
-
-1.3.9
-
-- updated for Valheim 0.271.22
-
-
-1.3.8
-
-- Updated to the newest Haldor's Quest Version
-
-1.3.7
-
-- Updated to newest Test Branch of Valheim 
-- Increased amount of selectable coal before turning off kilns
-- fixed a few spelling errors
-
-
-
-1.3.6
-
-- Updated to newest BepInEx and Valheim Patch 0.214.300
-
-
-
-1.3.5
-
-- updated to the newest version of Valheiml 0.214.2
-- added back the toggle to turn off and on Automatic Fueling.
-
-1.3.4 - fixed several RPC bugs and bumped version for incorrect README.MD
-
-
-1.3.0
-
-- add ability to turn off Spinning Wheel and Windmills
-
-
-1.2.0
-
-- Added ability to turn off Hearth and BathTub.  This allows the mod to coexists with other mods like BetterWards 
-
-1.1.9
-
-- Fixed bug in turning off Kilns.  When kilns were turned off all "Smelters" stopped working.
-
-
-1.1.8
-
-- Option to turn off Kilns
-- Ability to pull from carts
-- Added ownership checks to containers for multiplayer duping
-
-
-1.1.7
-
-- Added option for Blast Furnace to take all fuel.  Default is on.
-- Lots of code cleanup.
-
-1.16
-
-- Fix for smelter oject not set to an instance error.  Widmills and Spinning Wheels are smelters and they were causing errors when checking their smoke.
-
-
-1.15
-
-- Enabled the ability to turn off the verification of clients.  This keeps the server from kicking players that do not have the mod.
-- Added the ability to stack smelters and kilns.  
-
-1.1.4
-
-- Added ServerSync - Install on the Clients and Server and the Server will control the config.
-- fine tuned the container code to include custom chests and mods
-- confirmed working with Drawers Mod.
-
-1.1.3
-
-- Fixed the black iron chests and custom chest.  Can now pull from all containers
-- Confirmed working with Eitr Refinery
-
-1.1.2
-
-- Fixed the toggle key
-
-1.1.0
-
-- added the options for torches, campfires and hearths
-
-1.0.1
-
-- initial release
-
-##	Now for the shameless plug
-
-> ### My Other Mods:
->>* [No Smoke Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/NoSmokeStayLit/)
->>* [No Smoke Simplified](https://valheim.thunderstore.io/package/TastyChickenLegs/NoSmokeSimplified/)
->>* [Honey Please](https://valheim.thunderstore.io/package/TastyChickenLegs/HoneyPlease/)
->>* [Automatic Fuel](https://valheim.thunderstore.io/package/TastyChickenLeg/AutomaticFuel/)
->>* [Forsaken Powers Plus](https://valheim.thunderstore.io/package/TastyChickenLeg/ForsakenPowersPlus/)
->>* [Recycle Plus](https://valheim.thunderstore.io/package/TastyChickenLeg/RecyclePlus/)
->>* [Blast Furnace Takes All](https://valheim.thunderstore.io/package/TastyChickenLeg/BlastFurnaceTakesAll/)
->>* [Timed Torches Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/TimedTorchesStayLit/)
->>* [Drop More Loot](https://valheim.thunderstore.io/package/TastyChickenLegs/DropMoreLoot/)
+> * [No Smoke Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/NoSmokeStayLit/)
+> * [No Smoke Simplified](https://valheim.thunderstore.io/package/TastyChickenLegs/NoSmokeSimplified/)
+> * [Honey Please](https://valheim.thunderstore.io/package/TastyChickenLegs/HoneyPlease/)
+> * [Forsaken Powers Plus](https://valheim.thunderstore.io/package/TastyChickenLeg/ForsakenPowersPlus/)
+> * [Recycle Plus](https://valheim.thunderstore.io/package/TastyChickenLeg/RecyclePlus/)
+> * [Blast Furnace Takes All](https://valheim.thunderstore.io/package/TastyChickenLeg/BlastFurnaceTakesAll/)
+> * [Timed Torches Stay Lit](https://valheim.thunderstore.io/package/TastyChickenLeg/TimedTorchesStayLit/)
+> * [Drop More Loot](https://valheim.thunderstore.io/package/TastyChickenLegs/DropMoreLoot/)

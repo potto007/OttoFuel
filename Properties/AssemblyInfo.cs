@@ -6,7 +6,7 @@ using OttoFuel;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle(OttoFuelPlugin.ModName)]
-[assembly: AssemblyDescription("Automatic fuel for fireplaces, smelters, ovens and shield generators. A fork of AutomaticFuel by TastyChickenLegs.")]
+[assembly: AssemblyDescription("Automatic fuel for fireplaces, smelters, ovens and shield generators.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(OttoFuelPlugin.Maintainer)]
 [assembly: AssemblyProduct(OttoFuelPlugin.ModName)]

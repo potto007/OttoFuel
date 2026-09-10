@@ -45,7 +45,7 @@
     <None Include="README.md" />
     <None Include="Thunderstore/manifest.json" />
     <None Include="Thunderstore/icon.png" />
-    <None Include="Thunderstore/README.md" />
+    <None Include="CHANGELOG.md" />
   </ItemGroup>
 
   <!-- Drop the built plugin into the BepInEx profile named by environment.props. -->
@@ -76,6 +76,7 @@
       <PackageFiles Include="$(MSBuildProjectDirectory)/Thunderstore/manifest.json" />
       <PackageFiles Include="$(MSBuildProjectDirectory)/Thunderstore/icon.png" />
       <PackageFiles Include="$(MSBuildProjectDirectory)/README.md" />
+      <PackageFiles Include="$(MSBuildProjectDirectory)/CHANGELOG.md" />
       <PackageFiles Include="$(MSBuildProjectDirectory)/LICENSE.txt" />
     </ItemGroup>
     <Error Condition="!Exists('$(MSBuildProjectDirectory)/Thunderstore/icon.png')" Text="Thunderstore/icon.png is missing. It must be 256x256." />
