@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -12,11 +12,10 @@ using HarmonyLib;
 namespace OttoFuel
 {
     [BepInPlugin(ModGUID, ModName, ModVersion)]
-    [BepInDependency("potto007.Ottomation.ModLib", "1.16.0")]
     public class OttoFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "OttoFuel";
-        internal const string ModVersion = "1.6.0";
+        internal const string ModVersion = "1.6.1";
         // Author is the BepInEx GUID prefix and the Thunderstore namespace.
         internal const string Author = "potto007";
         internal const string Maintainer = "Paul Otto";
@@ -97,14 +96,8 @@ namespace OttoFuel
         
         public void Awake()
         {
-            // Rename this plugin's saved settings to the series spelling before anything
-            // binds, so a renamed setting keeps its value. See Ottomation_ModLib ADR-0007
-            // and ADR-0008.
-            global::Ottomation.Lib.Config.ConfigNameMigration.Apply(Config, Logger);
-            global::Ottomation.Lib.Config.ConfigHeader.BindAuthor(Config);
 
-
-            _serverConfigLocked = config("General", "LockConfiguration", Toggle.On,
+            _serverConfigLocked = config("1 - General", "Lock Configuration", Toggle.On,
                 "If on, the configuration is locked and can be changed by server admins only.");
             _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
            
@@ -137,11 +130,11 @@ namespace OttoFuel
             //new ConfigDescription("HotKey to disable and enable AutoFuel", new AcceptableShortcuts()));
 
             toggleKeythree = config("General", "ToggleKey", KeyCode.F10, "Key to toggle behaviour. Leave blank to disable the toggle key. Use https://docs.unity3d.com/Manual/ConventionalGameInput.html");
-            turnOffWindmills = config("Smelters", "TurnOffWindmills", false, "Turn off the Windmills");
-            turnOffSpinningWheel = config("Smelters", "TurnOffSpinningWheel", false, "Turn off the Spinnng Wheel");
-            turnOffKiln = config("Smelters", "TurnOffKiln", false, "Turn off the Kiln");
-            turnoffSmelter = config("Smelters", "TurnOffSmelter", false, "Turn off the Smelter");
-            turnoffBlastFurnace = config("Smelters", "TurnOffBlastFurnace", false, "Turn off Blast Furnace");
+            turnOffWindmills = config("Smelters", "Turn Off Windmills", false, "Turn off the Windmills");
+            turnOffSpinningWheel = config("Smelters", "Turn Off SpinningWheel", false, "Turn off the Spinnng Wheel");
+            turnOffKiln = config("Smelters", "Turn Off Kiln", false, "Turn off the Kiln");
+            turnoffSmelter = config("Smelters", "Turn off Smelter", false, "Turn off the Smelter");
+            turnoffBlastFurnace = config("Smelters", "Turn off Blast Furnace", false, "Turn off Blast Furnace");
             refuelStandingTorches = config("Fireplace", "RefuelStandingTorches", true, "Refuel standing torches");
             refuelBraziers = config("Fireplace", "RefuelBraziers", true, "Refuel Braziers");
             refuelHotTub = config("Fireplace", "RefuelHotTub", true, "Refuel HotTub");
@@ -153,12 +146,12 @@ namespace OttoFuel
                 new ConfigDescription("The maximum range to pull fuel from containers for ovens",
                 new AcceptableValueRange<float>(1f, 50f)));
             restrictKilnOutput = config("Smelters", "RestrictKilnOutput", false, "Restrict kiln output");
-            nofloorpickup = config("General", "UseDroppedItemsForFuel", true, "Use Dropped Items for Fuel");
+            nofloorpickup = config("General", "Use Dropped Items for Fuel", true, "Use Dropped Items for Fuel");
 
-            isOn = config("General", "IsOn", true, "Behaviour is currently on or not");
+            isOn = config("", "IsOn", true, "Behaviour is currently on or not");
             distributedFilling = config("Smelters", "DistributedFueling", true, "If true, refilling will occur one piece of fuel or ore at a time, making filling take longer but be better distributed between objects.");
             leaveLastItem = config("Smelters", "LeaveLastItem", false, "Don't use last of item in chest");
-            modEnabled = config("General", "Enabled", true, "Enable this mod");
+            modEnabled = config("", "Enabled", true, "Enable this mod");
 
             if (!modEnabled.Value)
                 return;
@@ -212,7 +205,7 @@ namespace OttoFuel
                     description.Description +
                     (synchronizedSetting ? " [Synced with Server]" : " [Not Synced with Server]"),
                     description.AcceptableValues, description.Tags);
-            ConfigEntry<T> configEntry = Config.Bind(global::Ottomation.Lib.Config.ConfigName.Section(group), global::Ottomation.Lib.Config.ConfigName.Key(name), value, extendedDescription);
+            ConfigEntry<T> configEntry = Config.Bind(group, name, value, extendedDescription);
             //var configEntry = Config.Bind(group, name, value, description);
 
             SyncedConfigEntry<T> syncedConfigEntry = ConfigSync.AddConfigEntry(configEntry);

@@ -41,18 +41,17 @@ On a clean install OttoFuel writes a starter config with `LeaveLastItem = true`,
 it never empties a chest to zero. Every other setting keeps its stock value.
 
 Every setting lives in `BepInEx/config/potto007.OttoFuel.cfg`, and you can change it in a
-text editor or in game through Configuration Manager. The names follow the Ottomation
-series spelling. A config from an earlier OttoFuel, or one carried over from AutomaticFuel,
-is renamed in place on first load, so your values carry over.
+text editor or in game through Configuration Manager. `Enabled` and `IsOn` sit in the
+unnamed section at the top of the file, which BepInEx writes as `[]`.
 
 | Section | Key | Default | What it does |
 | --- | --- | --- | --- |
-| General | `Enabled` | `true` | Turns the mod on or off. |
-| General | `IsOn` | `true` | Whether fueling is currently on. |
+| (unnamed) | `Enabled` | `true` | Turns the mod on or off. |
+| (unnamed) | `IsOn` | `true` | Whether fueling is currently on. |
 | General | `ToggleKey` | `F10` | The key that toggles fueling. Leave it blank to disable the key. |
-| General | `LockConfiguration` | `On` | When on, only a server admin can change the settings. |
+| 1 - General | `Lock Configuration` | `On` | When on, only a server admin can change the settings. |
 | General | `DropRange` | `15` | How far, 1 to 50 meters, to pull dropped fuel. |
-| General | `UseDroppedItemsForFuel` | `true` | Use fuel lying on the ground, not only fuel in chests. |
+| General | `Use Dropped Items for Fuel` | `true` | Use fuel lying on the ground, not only fuel in chests. |
 | Fireplace | `FireplaceRange` | `5` | How far, 1 to 50 meters, to pull fuel from chests for fires. |
 | Fireplace | `FuelDisallowTypes` | `RoundLog,FineWood` | Items never used as fuel, comma separated. |
 | Fireplace | `RefuelStandingTorches` | `true` | Refuel standing torches. |
@@ -72,19 +71,17 @@ is renamed in place on first load, so your values carry over.
 | Smelters | `BlastFurnaceTakesAll` | `true` | Let the blast furnace take every ore. |
 | Smelters | `RestrictKilnOutput` | `false` | Stop fueling kilns past a coal limit. |
 | Smelters | `RestrictKilnOutputAmount` | `50` | The amount of coal, 1 to 1000, that shuts off kiln fueling. |
-| Smelters | `TurnOffKiln` | `false` | Leave kilns alone. |
-| Smelters | `TurnOffSmelter` | `false` | Leave smelters alone. |
-| Smelters | `TurnOffBlastFurnace` | `false` | Leave blast furnaces alone. |
-| Smelters | `TurnOffWindmills` | `false` | Leave windmills alone. |
-| Smelters | `TurnOffSpinningWheel` | `false` | Leave spinning wheels alone. |
+| Smelters | `Turn Off Kiln` | `false` | Leave kilns alone. |
+| Smelters | `Turn off Smelter` | `false` | Leave smelters alone. |
+| Smelters | `Turn off Blast Furnace` | `false` | Leave blast furnaces alone. |
+| Smelters | `Turn Off Windmills` | `false` | Leave windmills alone. |
+| Smelters | `Turn Off SpinningWheel` | `false` | Leave spinning wheels alone. |
 
 ___________________________
 #### Installation: (manual)  
 
-Extract the DLL from the zip file into `<GameDirectory>\BepInEx\plugins`, and install
-[Ottomation_ModLib](https://thunderstore.io/c/valheim/p/potto007/Ottomation_ModLib/) and
-[Jotunn](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/) the same way. OttoFuel uses
-the library for its config handling, and the library needs Jotunn. Then start the game.
+Extract the DLL from the zip file into `<GameDirectory>\BepInEx\plugins`, then start the
+game.
 ___________________________
 #### Installation (Automatic)
 Use the R2Modmanager on Thunderstore.  Search for the mod and install

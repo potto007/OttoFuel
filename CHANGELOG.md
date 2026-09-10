@@ -3,6 +3,15 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.6.1
+- Drops the Ottomation_ModLib and Jotunn dependencies that 1.6.0 added. OttoFuel needs
+  only BepInEx again.
+- Setting names go back to the 1.5.3 spelling, such as `Lock Configuration` and
+  `Turn Off Kiln`, so a config from 1.5.3 or earlier, or one carried over from
+  AutomaticFuel, loads with its values. If you ran 1.6.0, check your settings, because a
+  value you changed under 1.6.0 is back at its default.
+- Keeps the corrected README config table, now with the names above.
+
 ## v1.6.0
 - Depends on Ottomation_ModLib 1.16.0, which brings Jotunn with it. OttoFuel uses the
   library for its config handling, and keeps ServerSync for syncing settings, so
