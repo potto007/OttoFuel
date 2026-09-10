@@ -15,7 +15,7 @@ namespace OttoFuel
     public class OttoFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "OttoFuel";
-        internal const string ModVersion = "1.5.2";
+        internal const string ModVersion = "1.5.3";
         // Author is the BepInEx GUID prefix and the Thunderstore namespace.
         internal const string Author = "potto007";
         internal const string Maintainer = "Paul Otto";
@@ -76,6 +76,17 @@ namespace OttoFuel
 
         private static readonly ConfigSync ConfigSync = new(ModGUID)
         { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
+
+        /// <summary>
+        /// Seeds the config file before BepInEx reads it.
+        /// BaseUnityPlugin loads the config in its own constructor, so this work cannot
+        /// wait for Awake. An explicit static constructor removes beforefieldinit, so the
+        /// runtime must run this before it builds the first instance.
+        /// </summary>
+        static OttoFuelPlugin()
+        {
+            GameClasses.ConfigMigration.Prepare(Paths.ConfigPath, ConfigFileName, OttoFuelLogger.LogInfo);
+        }
 
         public enum Toggle
         {

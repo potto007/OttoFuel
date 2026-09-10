@@ -3,6 +3,19 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.5.3
+- Carries your AutomaticFuel settings over on first run. If a
+  `TastyChickenLegs.AutomaticFuel.cfg` exists and no OttoFuel config does, OttoFuel
+  copies its values. `LeaveLastItem` matters most: at stock the mod empties a chest
+  to zero.
+- Renames the old `Use Dropped Items` key to `Use Dropped Items for Fuel` while it
+  copies, so that setting survives too.
+- Writes a starter config on a clean install, with `LeaveLastItem = true`.
+  `Lock Configuration` keeps its stock value of `On`, so a server still governs the
+  settings of the clients that join it.
+- Never overwrites an OttoFuel config that already exists. A failure here only logs
+  a warning; the mod still loads.
+
 ## v1.5.2
 - Added `CHANGELOG.md`, rendered on the Thunderstore package page.
 - Raised the BepInEx pack dependency to the current release.
