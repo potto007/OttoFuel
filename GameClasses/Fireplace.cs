@@ -83,6 +83,9 @@ namespace OttoFuel.GameClasses
 
                                 OttoFuelPlugin.Dbgl($"auto adding fuel {name} from ground");
 
+                                if (!TastyUtils.ClaimDroppedItem(item))
+                                    continue;
+
                                 int amount = Mathf.Min(item.m_itemData.m_stack, maxFuel);
                                 maxFuel -= amount;
 

@@ -3,6 +3,15 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.6.2
+- Fixes ground pickup in multiplayer. When a player other than the piece owner dropped
+  wood or ore next to a kiln, smelter, fireplace, oven, or generator, the piece
+  destroyed only its local copy of the item. The item's data still belonged to the
+  player who dropped it, so it respawned on the next sync and was taken again, giving
+  unlimited fuel or ore from a single drop. Reported by Cookie4Free in GitHub issue #1.
+  The mod now claims the dropped item before taking it, the same way the game does
+  when you pick an item up. Chests were never affected.
+
 ## v1.6.1
 - Drops the Ottomation_ModLib and Jotunn dependencies that 1.6.0 added. OttoFuel needs
   only BepInEx again.

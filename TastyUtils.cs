@@ -50,6 +50,21 @@ namespace OttoFuel
             InventoryChangedMethod?.Invoke(inventory, new object[] { true, false });
         }
 
+        /// <summary>
+        /// Take ownership of a dropped item's ZDO before consuming it. ZNetScene.Destroy
+        /// and ItemDrop.Save only reach the network from the ZDO owner. A drop made by
+        /// another player is owned by that player, so without this the piece owner
+        /// destroys the item locally, the ZDO survives, ZNetScene respawns the item on
+        /// the next sync, and the piece takes it again forever.
+        /// </summary>
+        public static bool ClaimDroppedItem(ItemDrop item)
+        {
+            ZNetView nview = item?.GetComponent<ZNetView>();
+            if (nview == null || !nview.IsValid()) return false;
+            if (!nview.IsOwner()) nview.ClaimOwnership();
+            return nview.IsOwner();
+        }
+
         public static bool IgnoreKeyPresses(bool extra = false)
         {
             if (!extra)
