@@ -1,4 +1,4 @@
-![OttoFuel - Keep the Fires Burning](https://raw.githubusercontent.com/potto007/OttoFuel/master/docs/images/ottofuel-title.png)
+![OttoFuel - Keep the Fires Burning](https://raw.githubusercontent.com/potto007/OttoFuel/main/docs/images/ottofuel-title.png)
 
 # OttoFuel
 
