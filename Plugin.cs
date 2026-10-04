@@ -58,6 +58,8 @@ namespace OttoFuel
         public static ConfigEntry<bool> refuelHearth;
         public static ConfigEntry<bool> refuelOvens;
         public static ConfigEntry<float> ovenRange;
+        public static ConfigEntry<bool> reloadBallistas;
+        public static ConfigEntry<float> ballistaRange;
         public static ConfigEntry<bool> refuelHotTub;
         public static ConfigEntry<bool> turnOffWindmills;
         public static ConfigEntry<bool> turnOffSpinningWheel;
@@ -144,6 +146,10 @@ namespace OttoFuel
             refuelOvens = config("Oven", "RefuelOvens", true, "Refuel the stone oven and any other cooking station that burns fuel");
             ovenRange = config("Oven", "OvenRange", 5f,
                 new ConfigDescription("The maximum range to pull fuel from containers for ovens",
+                new AcceptableValueRange<float>(1f, 50f)));
+            reloadBallistas = config("Ballista", "ReloadBallistas", true, "Reload ballistas with missiles from nearby chests and the ground");
+            ballistaRange = config("Ballista", "BallistaRange", 10f,
+                new ConfigDescription("The maximum range to pull missiles from containers for ballistas",
                 new AcceptableValueRange<float>(1f, 50f)));
             restrictKilnOutput = config("Smelters", "RestrictKilnOutput", false, "Restrict kiln output");
             nofloorpickup = config("General", "Use Dropped Items for Fuel", true, "Use Dropped Items for Fuel");

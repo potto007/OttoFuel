@@ -21,6 +21,7 @@ and off the ground, then feeds them to the things that need them.
 - Smelters, blast furnaces, charcoal kilns, windmills and spinning wheels
 - **Stone ovens and any other cooking station that burns fuel (new in 1.5.0)**
 - Shield generators
+- Ballistas, which reload with missiles from nearby chests and the ground
 
 ### Other features
 
@@ -62,6 +63,8 @@ unnamed section at the top of the file, which BepInEx writes as `[]`.
 | Fireplace | `RefuelFirePits` | `true` | Refuel fire pits. |
 | Fireplace | `RefuelHearth` | `true` | Refuel hearths. |
 | Fireplace | `RefuelHotTub` | `true` | Refuel hot tubs. |
+| Ballista | `ReloadBallistas` | `true` | Reload ballistas with missiles from nearby chests and the ground. |
+| Ballista | `BallistaRange` | `10` | How far, 1 to 50 meters, to pull missiles from chests for ballistas. |
 | Oven | `RefuelOvens` | `true` | Refuel the stone oven and any other cooking station that burns fuel. |
 | Oven | `OvenRange` | `5` | How far, 1 to 50 meters, to pull fuel from chests for ovens. |
 | Smelters | `SmelterOreRange` | `15` | How far, 1 to 50 meters, to pull ore from chests for smelters. |

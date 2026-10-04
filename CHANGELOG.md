@@ -3,6 +3,13 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## Unreleased
+
+- Reloads ballistas. A ballista takes missiles from chests within
+  `BallistaRange`, 10 meters by default, and from the ground within `DropRange`. It
+  fills to its limit and only adds the missile type it already holds, as the game
+  does by hand. `LeaveLastItem` applies. Turn it off with `ReloadBallistas`.
+
 ## v1.6.5
 
 - Rebuilt against Valheim 1.0.16. Every Harmony patch target still resolves in this build, and nothing else changed.
