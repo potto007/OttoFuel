@@ -4,7 +4,7 @@
 
 ### Updated for Valheim 1.0
 
-**Version 1.6.5**, built and Harmony-checked against Valheim 1.0.16.
+**Version 1.7.0**, built and Harmony-checked against Valheim 1.0.16.
 
 OttoFuel keeps your production burning. It pulls fuel and ore out of nearby chests
 and off the ground, then feeds them to the things that need them.
@@ -21,7 +21,7 @@ and off the ground, then feeds them to the things that need them.
 - Smelters, blast furnaces, charcoal kilns, windmills and spinning wheels
 - **Stone ovens and any other cooking station that burns fuel (new in 1.5.0)**
 - Shield generators
-- Ballistas, which reload with missiles from nearby chests and the ground
+- **Ballistas, which reload with missiles from nearby chests and the ground (new in 1.7.0)**
 
 ### Other features
 

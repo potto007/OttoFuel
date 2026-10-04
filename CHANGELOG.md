@@ -3,7 +3,7 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
-## Unreleased
+## v1.7.0
 
 - Reloads ballistas. A ballista takes missiles from chests within
   `BallistaRange`, 10 meters by default, and from the ground within `DropRange`. It
