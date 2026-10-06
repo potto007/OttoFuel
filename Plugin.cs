@@ -15,7 +15,7 @@ namespace OttoFuel
     public class OttoFuelPlugin : BaseUnityPlugin
     {
         internal const string ModName = "OttoFuel";
-        internal const string ModVersion = "1.7.0";
+        internal const string ModVersion = "1.7.1";
         // Author is the BepInEx GUID prefix and the Thunderstore namespace.
         internal const string Author = "potto007";
         internal const string Maintainer = "Paul Otto";
