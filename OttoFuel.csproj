@@ -50,6 +50,7 @@
 
   <!-- Drop the built plugin into the BepInEx profile named by environment.props. -->
   <Target Name="CopyOutputDLL" AfterTargets="ILRepacker" Condition="'$(Configuration)' == 'Debug' AND '$(CopyOutputDLLPath)' != '' AND Exists('$(CopyOutputDLLPath)')">
+    <Delete Files="$(CopyOutputDLLPath)/$(TargetFileName)" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyOutputDLLPath)" OverwriteReadOnlyFiles="true" />
   </Target>
 
