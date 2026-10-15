@@ -196,6 +196,11 @@ namespace OttoFuel.GameClasses
                         {
                             if (ored)
                                 break;
+                            // A conversion with no source item is not ore. The Deep North Frost Kiln
+                            // ($piece_frostkiln) has exactly one, { from: null, to: FrozenFuel }, and
+                            // reading m_from on it used to throw a NullReferenceException here.
+                            if (itemConversion.m_from == null || itemConversion.m_to == null)
+                                continue;
                             if (item.m_itemData.m_shared.m_name == itemConversion.m_from.m_itemData.m_shared.m_name && maxOre > 0)
                             {
                                 if (OttoFuelPlugin.oreDisallowTypes.Value.Split(',').Contains(name))
@@ -290,6 +295,10 @@ namespace OttoFuel.GameClasses
                 {
                     if (ored)
                         break;
+                    // A conversion with no source item has no ore to look for in a chest. The Frost
+                    // Kiln ($piece_frostkiln) is built around one, { from: null, to: FrozenFuel }.
+                    if (itemConversion.m_from == null || itemConversion.m_to == null)
+                        continue;
                     List<ItemDrop.ItemData> itemList = new List<ItemDrop.ItemData>();
                     c.GetInventory().GetAllItems(itemConversion.m_from.m_itemData.m_shared.m_name, itemList);
 
