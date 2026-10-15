@@ -22,6 +22,7 @@ and off the ground, then feeds them to the things that need them.
 - **Stone ovens and any other cooking station that burns fuel (new in 1.5.0)**
 - Shield generators
 - **Ballistas, which reload with missiles from nearby chests and the ground (new in 1.7.0)**
+- **The Deep North Frost Kiln, which burns Ice, and the Frost Foundry, which burns Liquid Frost (new in 1.8.0)**
 
 ### Other features
 

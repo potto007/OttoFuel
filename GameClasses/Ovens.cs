@@ -10,19 +10,26 @@ namespace OttoFuel.GameClasses
     /// Refuels the stone oven and any other fuelled cooking station.
     /// A cooking station is a separate game class from a fireplace or a smelter, so it
     /// needs its own patch. The cooking spot burns no fuel and is skipped.
+    ///
+    /// The hook is UpdateCooking, not UpdateFuel. UpdateCooking only calls UpdateFuel when
+    /// the station is actually cooking, so a hook on UpdateFuel never sees an empty tank and
+    /// can only top up, never fill. The Deep North Frost Foundry ($piece_frostfoundry) has
+    /// m_useFueldWhileEmpty off, so it never reaches UpdateFuel at all while it is empty.
+    /// UpdateCooking runs every second regardless, which also means the refill now happens
+    /// while an idle oven sits empty, like the fireplace and smelter hooks already do.
     /// </summary>
     internal class Oven_Patches
     {
-        [HarmonyPatch(typeof(CookingStation), "UpdateFuel")]
-        private static class CookingStation_UpdateFuel_Patch
+        [HarmonyPatch(typeof(CookingStation), "UpdateCooking")]
+        private static class CookingStation_UpdateCooking_Patch
         {
             private static void Postfix(CookingStation __instance, ZNetView ___m_nview)
             {
                 if (!OttoFuelPlugin.refuelOvens.Value)
                     return;
 
-                // UpdateFuel returns early on a station that burns no fuel. A postfix still
-                // runs, so repeat the check here.
+                // UpdateCooking drives a station that burns no fuel too, the cooking spot for
+                // one. m_useFuel says whether this one has a fuel item at all.
                 if (!__instance.m_useFuel || __instance.m_fuelItem == null)
                     return;
 

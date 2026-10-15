@@ -3,6 +3,20 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.8.0
+
+- Fixes the Deep North stations. The Frost Kiln (`$piece_frostkiln`) is a smelter
+  whose only conversion has no source item, `{ from: null, to: FrozenFuel }`, and the
+  ore loops read that source item without checking it. The kiln threw a
+  `NullReferenceException` every cycle, which killed the refill before any fuel moved.
+  Convertions with no source item are now skipped, so the kiln takes Ice like any other
+  smelter.
+- Refills the Frost Foundry (`$piece_frostfoundry`) from empty. The oven hook sat on
+  `CookingStation.UpdateFuel`, which the game only calls while a station is cooking, and
+  the foundry has `m_useFueldWhileEmpty` off, so an empty foundry never got there. The
+  hook moved to `UpdateCooking`, which runs every second. An idle oven or foundry now
+  gets filled too, not only one that is already burning something.
+
 ## v1.7.1
 
 - Rebuilt against Valheim 1.0.17. Every Harmony patch target still resolves in this build, and nothing else changed.
