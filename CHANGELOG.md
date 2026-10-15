@@ -3,6 +3,10 @@
 All notable changes to OttoFuel. Versions from v1.4.7 down are the history of
 AutomaticFuel by TastyChickenLegs, which OttoFuel continues.
 
+## v1.7.2
+
+- Rebuilt against Valheim 1.0.20. Every Harmony patch target still resolves in this build, and nothing else changed.
+
 ## v1.7.1
 
 - Rebuilt against Valheim 1.0.17. Every Harmony patch target still resolves in this build, and nothing else changed.
