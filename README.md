@@ -4,7 +4,7 @@
 
 ### Updated for Valheim 1.0
 
-**Version 1.7.2**, built and Harmony-checked against Valheim 1.0.20.
+**Version 1.7.3**, built and Harmony-checked against Valheim 1.0.21.
 
 OttoFuel keeps your production burning. It pulls fuel and ore out of nearby chests
 and off the ground, then feeds them to the things that need them.
